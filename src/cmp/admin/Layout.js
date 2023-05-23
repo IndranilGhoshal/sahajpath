@@ -25,146 +25,152 @@ import { Accordion, AccordionDetails, AccordionSummary, Button } from '@mui/mate
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-    ({ theme, open }) => ({
-      flexGrow: 1,
-      padding: theme.spacing(3),
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      marginLeft: `-${drawerWidth}px`,
-      ...(open && {
-        transition: theme.transitions.create('margin', {
-          easing: theme.transitions.easing.easeOut,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
-      }),
-    }),
-  );
-
-  const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-  })(({ theme, open }) => ({
-    transition: theme.transitions.create(['margin', 'width'], {
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    marginLeft: `-${drawerWidth}px`,
     ...(open && {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: `${drawerWidth}px`,
-      transition: theme.transitions.create(['margin', 'width'], {
+      transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
+      marginLeft: 0,
     }),
-  }));
-  
-  const DrawerHeader = styled('div')(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  }));
+  }),
+);
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
+}));
 
 
 
 export default function Layout() {
 
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
-  
-    const handleDrawerOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleDrawerClose = () => {
-      setOpen(false);
-    };
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
 
-    const logout = () =>{
-        sessionStorage.clear()
-        navigate("/login")
-    }
-  
-    return (
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="fixed" open={open}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={{ mr: 2, ...(open && { display: 'none' }) }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              Sahajpath Career Solution
-            </Typography>
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
-            <span style={{flex:'1'}}></span>
-            <button className='btn btn-primary' onClick={logout}>Logout</button>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          sx={{
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const logout = () => {
+    sessionStorage.clear()
+    navigate("/login")
+  }
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="fixed" open={open}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div">
+            Sahajpath Career Solution
+          </Typography>
+
+          <span style={{ flex: '1' }}></span>
+          <button className='btn btn-primary' onClick={logout}>Logout</button>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
             width: drawerWidth,
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              width: drawerWidth,
-              boxSizing: 'border-box',
-            },
-          }}
-          variant="persistent"
-          anchor="left"
-          open={open}
-        >
-          <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          <List>
-            <Accordion>
-                <AccordionSummary>
-                    <Link style={{color:'black', textDecoration:'none'}} to='/admin/dashboard'> Dashboard</Link>
-                </AccordionSummary>
-            </Accordion>
-            <Accordion>
-                <AccordionSummary>
-                    <Typography> Set Admission Details</Typography>
-                </AccordionSummary>
-                <AccordionDetails style={{textAlign:"right"}}>
-                <Link style={{color:'black', textDecoration:'none'}} to='/admin/setsession'> Set Session</Link>
-                </AccordionDetails>
-                <AccordionDetails style={{textAlign:"right"}}>
-                <Link style={{color:'black', textDecoration:'none'}} to='/admin/setcourseapplied'> Set Course</Link>
-                </AccordionDetails>
-            </Accordion>
-            <Accordion>
-                <AccordionSummary>
-                    <Link style={{color:'black', textDecoration:'none'}} to='/admin/admissionlist'> Admission List</Link>
-                </AccordionSummary>
-            </Accordion>
-            <Accordion>
-                <AccordionSummary>
-                    <Link style={{color:'black', textDecoration:'none'}} to='/admin/enquirylist'> Enquiry List</Link>
-                </AccordionSummary>
-            </Accordion>
-          </List>
-        </Drawer>
-        <Main open={open}>
-          <DrawerHeader />
-          <Outlet />
-        </Main>
-      </Box>
-    );
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          <Accordion>
+            <AccordionSummary>
+              <Link style={{ color: 'black', textDecoration: 'none' }} to='/admin/dashboard'> Dashboard</Link>
+            </AccordionSummary>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary>
+              <Typography> Set Admission Details</Typography>
+            </AccordionSummary>
+            <AccordionDetails style={{ textAlign: "right" }}>
+              <Link style={{ color: 'black', textDecoration: 'none' }} to='/admin/setsession'> Set Session</Link>
+            </AccordionDetails>
+            <AccordionDetails style={{ textAlign: "right" }}>
+              <Link style={{ color: 'black', textDecoration: 'none' }} to='/admin/setcourseapplied'> Set Course</Link>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary>
+              <Link style={{ color: 'black', textDecoration: 'none' }} to='/admin/admissionlist'> Admission List</Link>
+            </AccordionSummary>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary>
+              <Typography> Enquiry Details</Typography>
+            </AccordionSummary>
+            <AccordionDetails style={{ textAlign: "right" }}>
+              <Link style={{ color: 'black', textDecoration: 'none' }} to='/admin/enquirylist'> Pending Enquiry</Link>
+            </AccordionDetails>
+            <AccordionDetails style={{ textAlign: "right" }}>
+              <Link style={{ color: 'black', textDecoration: 'none' }} to='/admin/enquiryAcceptlist'> Accepted Enquiry</Link>
+            </AccordionDetails>
+          </Accordion>
+        </List>
+      </Drawer>
+      <Main open={open}>
+        <DrawerHeader />
+        <Outlet />
+      </Main>
+    </Box>
+  );
 }

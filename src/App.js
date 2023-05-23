@@ -6,6 +6,13 @@ import Login from "./cmp/Login";
 import SignUp from "./cmp/SignUp";
 import NoPage from "./cmp/NoPage";
 
+import './assets/css/bootstrap.min.css'
+import './assets/css/animate.css'
+import './assets/css/icofont.min.css'
+import './assets/css/icofont.css'
+// import './assets/css/lightcase.css'
+import './assets/css/swiper.min.css'
+
 import './assets/css/style.css'
 import ContactUs from "./cmp/ContactUs";
 import Courses from "./cmp/Courses";
@@ -22,6 +29,8 @@ import EnquiryList from "./cmp/admin/EnquiryList";
 import SetSession from "./cmp/admin/SetSession";
 import SetCourse from "./cmp/admin/SetCourse";
 import EnquiryStatus from "./cmp/EnquiryStatus";
+import EnquiryDetails from "./cmp/admin/EnquiryDetails";
+import EnquiryAccept from "./cmp/admin/EnquiryAccept";
 
 
 function App() {
@@ -66,6 +75,9 @@ function App() {
           <Route path="setcourseapplied" element={<SetCourse />} />
           <Route path="admissionlist" element={<AdmissionList />} />
           <Route path="enquirylist" element={<EnquiryList />} />
+          <Route path="enquiryAcceptlist" element={<EnquiryAccept />} />
+          <Route path="enquirydetails/:id" element={<EnquiryDetails />} />
+          
 
         </Route>
 

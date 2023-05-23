@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { addSession, allSession } from '../../Services/sessionServices'
+import { addSession, allSession, deleteSession, editSession } from '../../Services/sessionServices'
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 export default function SetSession() {
 
@@ -18,18 +19,18 @@ export default function SetSession() {
         var data = {
         }
         allSession(data).then(result => {
-            // console.log(result)
             setSessionList(result.data.response)
         })
     }
 
-    const onSubmit =()=>{
+    const onSubmit = () => {
         var data = {
-            "start":start,
-            "end":end
+            "start": start,
+            "end": end
         }
-        addSession(data).then(result=>{
-            if(result.data.success){
+        addSession(data).then(result => {
+            if (result.data.success) {
+                NotificationManager.success(result.data.message);
                 setStart("")
                 setEnd("")
                 allSessionFun()
@@ -37,6 +38,58 @@ export default function SetSession() {
         })
     }
 
+    const [editBtn, setEditBtn] = useState(false)
+    const [editId, setEditId] = useState('')
+
+
+    const onEdit = (val) => {
+        setStart(val.start)
+        setEnd(val.end)
+        setEditId(val.id)
+        setEditBtn(true)
+    }
+
+    const onReset = () => {
+        setStart("")
+        setEnd("")
+        setEditId("")
+        setEditBtn(false)
+    }
+
+    const onEditBtn = () => {
+        var data = {
+            "id": editId,
+            "start": start,
+            "end": end
+        }
+
+        // console.log(data)
+        editSession(data).then(result => {
+            if (result.data.success) {
+                NotificationManager.success(result.data.message);
+                setStart("")
+                setEnd("")
+                setEditId("")
+                setEditBtn(false)
+                allSessionFun()
+            }
+        })
+
+    }
+
+
+    const onDelete = (val) =>{
+        var data = {
+            "id":val
+        }
+
+        deleteSession(data).then(result=>{
+            if(result.data.success){
+                NotificationManager.success(result.data.message);
+                allSessionFun()
+            }
+        })
+    }
 
 
     return (
@@ -51,21 +104,48 @@ export default function SetSession() {
                         <div className='col-sm-6'>
                             <label className='font-weight-500'>Session Start:</label>
                             <div className='mt-2'>
-                                <input type='number' className='form-control' value={start} onChange={(e)=>{setStart(e.target.value)}} />
+                                <input type='number' className='form-control' value={start} onChange={(e) => { setStart(e.target.value) }} />
                             </div>
                         </div>
 
                         <div className='col-sm-6'>
                             <label className='font-weight-500'>Session End:</label>
                             <div className='mt-2'>
-                                <input type='number' className='form-control' value={end} onChange={(e)=>{setEnd(e.target.value)}} />
+                                <input type='number' className='form-control' value={end} onChange={(e) => { setEnd(e.target.value) }} />
                             </div>
                         </div>
 
                     </div>
-                    <div className='mx-auto d-grid gap-2 mt-4'>
-                        <button className='btn btn-primary btn-lg' onClick={onSubmit}>Submit</button>
+
+                    <div className='row'>
+                        <div className='col-sm-6'>
+
+                            {
+                                editBtn ?
+                                    <div className='mx-auto d-grid gap-2 mt-4'>
+                                        <button className='btn btn-primary btn-lg' onClick={onEditBtn}>Edit</button>
+                                    </div>
+                                    :
+                                    <div className='mx-auto d-grid gap-2 mt-4'>
+                                        <button className='btn btn-primary btn-lg' onClick={onSubmit}>Submit</button>
+                                    </div>
+                            }
+
+
+
+
+                        </div>
+
+                        <div className='col-sm-6'>
+                            <div className='mx-auto d-grid gap-2 mt-4'>
+                                <button className='btn btn-secondary btn-lg' onClick={onReset}>Reset</button>
+                            </div>
+                        </div>
+
                     </div>
+
+
+
 
                 </div>
 
@@ -107,9 +187,9 @@ export default function SetSession() {
                                                     <td>{item.start}</td>
                                                     <td>{item.end}</td>
                                                     <td>
-                                                        <button type="button" className="btn btn-primary btn-sm">Edit</button>
+                                                        <button type="button" className="btn btn-primary btn-sm" onClick={()=>{ onEdit(item)}}>Edit</button>
 
-                                                        <button type="button" className="btn btn-secondary btn-sm mx-2">Delete</button>
+                                                        <button type="button" className="btn btn-secondary btn-sm mx-2" onClick={()=>{ onDelete(item.id)}}>Delete</button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -124,6 +204,7 @@ export default function SetSession() {
                 </div>
 
             </div>
+            <NotificationContainer />
         </>
     )
 }

@@ -1,7 +1,164 @@
 import React from 'react'
+import newsfoot1 from '../assets/images/03.png'
+import newsfoot2 from '../assets/images/04.png'
+import iconcont1 from '../assets/images/icon/01.png'
+import iconcont2 from '../assets/images/icon/02.png'
+import iconcont3 from '../assets/images/icon/03.png'
+import iconcont4 from '../assets/images/icon/04.png'
 
 export default function ContactUs() {
   return (
-    <div>ContactUs</div>
+    <>
+      <div className="pageheader-section">
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div className="pageheader-content text-center">
+                <h2>Get In Touch With Us</h2>
+                <nav aria-label="breadcrumb">
+                  <ol className="breadcrumb justify-content-center">
+                    <li className="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li className="breadcrumb-item active" aria-current="page">Contact Us</li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="map-address-section padding-tb section-bg">
+        <div className="container">
+            <div className="section-header text-center">
+                <span className="subtitle">Get in touch with us</span>
+                <h2 className="title">We're Always Eager To Hear From You!</h2>
+            </div>
+            <div className="section-wrapper">
+                <div className="row flex-row-reverse">
+                    <div className="col-xl-4 col-lg-5 col-12">
+                        <div className="contact-wrapper">
+                            <div className="contact-item">
+                                <div className="contact-thumb">
+                                <img className='' src={iconcont1} />
+                                </div>
+                                <div className="contact-content">
+                                    <h6 className="title">Office Address</h6>
+                                    <p>Shop No. 6, 5 SASHI BHUSAN BASAK LANE DURGA APPARTMENT, near NAINAN BANDHAB SAMITY CLUB, Baranagar, Kolkata, West Bengal </p>
+                                </div>
+                            </div>
+                            <div className="contact-item">
+                                <div className="contact-thumb">
+                                <img className='' src={iconcont2} />
+                                </div>
+                                <div className="contact-content">
+                                    <h6 className="title">Phone number</h6>
+                                    <p>+91 8240 759 778&nbsp; | +91 8250 065 159</p>
+                                    <p>+91 9874 918 752&nbsp; | +91 9674 440 028</p>
+                                </div>
+                            </div>
+                            <div className="contact-item">
+                                <div className="contact-thumb">
+                                <img className='' src={iconcont3} />
+                                </div>
+                                <div className="contact-content">
+                                    <h6 className="title">Send email </h6>
+                                    <a href="mailto:info@gmail.com">admin@gmil.com</a>
+                                </div>
+                            </div>
+                            <div className="contact-item">
+                                <div className="contact-thumb">
+                                <img className='' src={iconcont4} />
+                                </div>
+                                <div className="contact-content">
+                                    <h6 className="title">Our website</h6>
+                                    <a href="#">www.admin@gmil.com</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-xl-8 col-lg-7 col-12">
+                        <div className="map-area">
+                            <div className="maps">
+                             <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14729.992912408277!2d88.377359!3d22.6352053!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f89d2cbfb856c7%3A0x31180d5d844d0798!2sSahajpath%20Career%20Solutions!5e0!3m2!1sen!2sin!4v1684235265648!5m2!1sen!2sin" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div className="contact-section padding-tb">
+        <div className="container">
+            <div className="section-header text-center">
+                <span className="subtitle">Get in touch with Contact us</span>
+                <h2 className="title">Fill The Form Below So We Can Get To Know You And Your Needs Better.</h2>
+            </div>
+            <div className="section-wrapper">
+                <form className="contact-form" action="contact.php" id="contact-form" method="POST">
+                    <div className="form-group">
+                        <input type="text" placeholder="Your Name" id="name" name="name" required=""/>
+                    </div>
+                    <div className="form-group">
+                        <input type="text" placeholder="Your Email" id="email" name="email" required=""/>
+                    </div>
+                    <div className="form-group">
+                        <input type="text" placeholder="Phone" id="phone" name="phone" required=""/>
+                    </div>
+                    <div className="form-group">
+                        <input type="text" placeholder="Subject" id="subject" name="subject" required=""/>
+                    </div>
+                    <div className="form-group w-100">
+                        <textarea name="message" rows="8" id="message" placeholder="Your Message" required=""></textarea>
+                    </div>
+                    <div className="form-group w-100 text-center">
+                        <button className="lab-btn"><span>Send Your Message</span></button>
+                    </div>
+                </form>
+                <p className="form-message"></p> 
+            </div>
+        </div>
+    </div>
+      {/* <!-- footer --> */}
+      <div className="news-footer-wrap">
+        <div className="fs-shape">
+          <img className='fst-1' src={newsfoot1} />
+          <img className='fst-2' src={newsfoot2} />
+        </div>
+        {/* <!-- Newsletter Section Start Here --> */}
+        <div className="news-letter">
+          <div className="container">
+            <div className="section-wrapper">
+              <div className="news-title">
+                <h3>Want Us To Email You About Special Offers And Updates?</h3>
+              </div>
+              <div className="news-form">
+                <form action="/">
+                  <div className="nf-list">
+                    <input type="email" name="email" placeholder="Enter Your Email" />
+                    <input type="submit" name="submit" value="Subscribe Now" />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <!-- Newsletter Section Ending Here --> */}
+
+        {/* <!-- Footer Section Start Here --> */}
+        <footer>
+
+          <div className="footer-bottom style-2">
+            <div className="container">
+              <div className="section-wrapper">
+                <p>Copyrights © 2023 All Rights Services</p>
+              </div>
+            </div>
+          </div>
+        </footer>
+        {/* <!-- Footer Section Ending Here --> */}
+      </div>
+      {/* <!-- footer --> */}
+
+    </>
   )
 }

@@ -8,3 +8,7 @@ export function addCourse(data){
 export function allCourse(data){
     return axios.post(BASE_URL+'/api/course/allCourse', data)
 }
+
+export function courseDetails(data){
+    return axios.post(BASE_URL+'/api/course/courseDetails', data)
+}
