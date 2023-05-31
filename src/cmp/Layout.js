@@ -21,17 +21,21 @@ export default function Layout() {
     }
     return (
         <>
-        
+
 
             {/* <!-- header section start here --> */}
-           <a href="#" className="scrollToTop"><i class="icofont-rounded-up"></i>Page Toper</a>
+            <a href="#" className="scrollToTop"><i class="icofont-rounded-up"></i>Page Toper</a>
             <header className="header-section">
                 <div className="header-top">
                     <div className="container">
                         <div className="header-top-area">
+
                             <ul className="lab-ul left">
-                                <li>
-                                    <i className="icofont-ui-call"></i> <span>+91 8240 759 778</span>
+                                <li className='scroller'>
+                                    <i className="icofont-ui-call"></i>
+                                    
+                                    <marquee scrolldelay="300" width="130px">+91 8240 759 778 , +91 8240 759 778 , +91 8240 759 778 , +91 8240 759 778</marquee>
+
                                 </li>
                                 <li>
                                     <i className="icofont-location-pin"></i> Kolkata, India
@@ -39,11 +43,12 @@ export default function Layout() {
                             </ul>
                             <ul className="lab-ul social-icons d-flex align-items-center">
                                 <li><p>Find us on : </p></li>
-                                <li><a href="#" className="fb"><i className="icofont-facebook-messenger"></i></a></li>
+                                <li><a href="https://www.facebook.com/sahajpathcareersolution" target='_blank' className="rss"><i class="icofont-facebook"></i></a></li>
+                                {/* <li><a href="#" className="fb"><i className="icofont-facebook-messenger"></i></a></li>
                                 <li><a href="#" className="twitter"><i className="icofont-twitter"></i></a></li>
                                 <li><a href="#" className="vimeo"><i className="icofont-vimeo"></i></a></li>
                                 <li><a href="#" className="skype"><i className="icofont-skype"></i></a></li>
-                                <li><a href="#" className="rss"><i className="icofont-rss-feed"></i></a></li>
+                                <li><a href="#" className="rss"><i className="icofont-rss-feed"></i></a></li> */}
                             </ul>
                         </div>
                     </div>
@@ -56,7 +61,7 @@ export default function Layout() {
                             </div>
                             <div className="menu-area">
                                 <div className="menu">
-                                    <ul className="lab-ul">
+                                    <ul className="lab-ul active">
                                         <li className="">
                                             <a className={`nav-link cursor-pointer ${pathName == '/' ? "active" : ""}`} onClick={() => { goto('/') }}><i className='fa fa-home'></i> Home</a>
                                         </li>
@@ -82,7 +87,7 @@ export default function Layout() {
                                 <a className='signup' onClick={() => { goto('/signup') }}><i className="fa fa-user-plus"> </i> Registration</a>
 
                                 {/* <!-- toggle icons --> */}
-                                <div className="header-bar d-lg-none">
+                                <div className="header-bar d-lg-none active">
                                     <span></span>
                                     <span></span>
                                     <span></span>
@@ -95,7 +100,7 @@ export default function Layout() {
                     </div>
                 </div>
             </header>
-            
+
             {/* <!-- header section ending here --> */}
 
 

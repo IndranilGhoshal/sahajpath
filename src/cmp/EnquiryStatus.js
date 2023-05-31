@@ -2,8 +2,26 @@ import React, { useState } from 'react'
 import newsfoot1 from '../assets/images/03.png'
 import newsfoot2 from '../assets/images/04.png'
 import { checkStatus } from '../Services/enquiryServices'
+import Footers from './Footers'
+import { useNavigate } from 'react-router-dom'
+// import StripeCheckout from 'react-stripe-checkout';
+
+
 
 export default function EnquiryStatus() {
+
+    // const onToken =(token)=>{
+    //     console.log(token)
+    //   }
+
+
+    
+
+    var navigate = useNavigate()
+
+    const goto = (path) =>{
+      navigate(path)
+    }
 
 
     const [genKey, setGenKey] = useState('')
@@ -43,8 +61,8 @@ export default function EnquiryStatus() {
                                 <h2>Enquiry Status</h2>
                                 <nav aria-label="breadcrumb">
                                     <ol className="breadcrumb justify-content-center">
-                                        <li className="breadcrumb-item"><a href="index.html">Home</a></li>
-                                        <li className="breadcrumb-item active" aria-current="page">Enquiry Status</li>
+                                        <li className="breadcrumb-item" onClick={()=>{goto("/")}}><a>Home</a></li>
+                                        <li className="breadcrumb-item active" aria-current="page" onClick={()=>{goto("/enquirystatus")}}>Enquiry Status</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -65,6 +83,13 @@ export default function EnquiryStatus() {
                                             <div><input type='text' className='form-control' placeholder='Enter application No.' value={genKey} onChange={(e) => { setGenKey(e.target.value) }} /></div>
                                             <button className='btn btn-primary btn-lg' onClick={ckeckStatusFun}>Submit</button>
                                         </div>
+
+                                        {/* <StripeCheckout
+                                      token={onToken}
+                                      stripeKey="pk_test_51NCJBlSDCtLbLShRvRa0PwbazveOiMLCOAUPwdg7ZobR5FaQSG2WOD2ZQjHErfXdf1TFVKlrYVzeBvVvGUPclJsh00ff3MxTMK"
+                                    /> */}
+
+
 
 
                                     </div>
@@ -115,7 +140,7 @@ export default function EnquiryStatus() {
                 <div className="news-letter">
                     <div className="container">
                         <div className="section-wrapper">
-                            <div className="news-title">
+                            {/* <div className="news-title">
                                 <h3>Want Us To Email You About Special Offers And Updates?</h3>
                             </div>
                             <div className="news-form">
@@ -125,23 +150,14 @@ export default function EnquiryStatus() {
                                         <input type="submit" name="submit" value="Subscribe Now" />
                                     </div>
                                 </form>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
                 {/* <!-- Newsletter Section Ending Here --> */}
 
                 {/* <!-- Footer Section Start Here --> */}
-                <footer>
-
-                    <div className="footer-bottom style-2">
-                        <div className="container">
-                            <div className="section-wrapper">
-                                <p>Copyrights © 2023 All Rights Services</p>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                <Footers />
                 {/* <!-- Footer Section Ending Here --> */}
             </div>
             {/* <!-- footer --> */}

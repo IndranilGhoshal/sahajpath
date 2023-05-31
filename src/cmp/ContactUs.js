@@ -5,8 +5,17 @@ import iconcont1 from '../assets/images/icon/01.png'
 import iconcont2 from '../assets/images/icon/02.png'
 import iconcont3 from '../assets/images/icon/03.png'
 import iconcont4 from '../assets/images/icon/04.png'
+import Footers from './Footers'
+import { useNavigate } from 'react-router-dom'
+
 
 export default function ContactUs() {
+
+  var navigate = useNavigate()
+
+  const goto = (path) =>{
+    navigate(path)
+  }
   return (
     <>
       <div className="pageheader-section">
@@ -17,8 +26,8 @@ export default function ContactUs() {
                 <h2>Get In Touch With Us</h2>
                 <nav aria-label="breadcrumb">
                   <ol className="breadcrumb justify-content-center">
-                    <li className="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li className="breadcrumb-item active" aria-current="page">Contact Us</li>
+                    <li className="breadcrumb-item" onClick={()=>{goto("/")}}><a>Home</a></li>
+                    <li className="breadcrumb-item active" aria-current="page" onClick={()=>{goto("/contactus")}}>Contact Us</li>
                   </ol>
                 </nav>
               </div>
@@ -62,7 +71,7 @@ export default function ContactUs() {
                                 </div>
                                 <div className="contact-content">
                                     <h6 className="title">Send email </h6>
-                                    <a href="mailto:info@gmail.com">admin@gmil.com</a>
+                                    <a href="mailto:support@sahajpathcareersolution.in">support@sahajpathcareersolution.in</a>
                                 </div>
                             </div>
                             <div className="contact-item">
@@ -70,8 +79,8 @@ export default function ContactUs() {
                                 <img className='' src={iconcont4} />
                                 </div>
                                 <div className="contact-content">
-                                    <h6 className="title">Our website</h6>
-                                    <a href="#">www.admin@gmil.com</a>
+                                    <h6 className="title">Follow Us</h6>
+                                    <a style={{fontSize:"12px"}} href="https://www.facebook.com/sahajpathcareersolution" target='_blank'>https://www.facebook.com/sahajpathcareersolution</a>
                                 </div>
                             </div>
                         </div>
@@ -87,37 +96,7 @@ export default function ContactUs() {
             </div>
         </div>
     </div>
-    <div className="contact-section padding-tb">
-        <div className="container">
-            <div className="section-header text-center">
-                <span className="subtitle">Get in touch with Contact us</span>
-                <h2 className="title">Fill The Form Below So We Can Get To Know You And Your Needs Better.</h2>
-            </div>
-            <div className="section-wrapper">
-                <form className="contact-form" action="contact.php" id="contact-form" method="POST">
-                    <div className="form-group">
-                        <input type="text" placeholder="Your Name" id="name" name="name" required=""/>
-                    </div>
-                    <div className="form-group">
-                        <input type="text" placeholder="Your Email" id="email" name="email" required=""/>
-                    </div>
-                    <div className="form-group">
-                        <input type="text" placeholder="Phone" id="phone" name="phone" required=""/>
-                    </div>
-                    <div className="form-group">
-                        <input type="text" placeholder="Subject" id="subject" name="subject" required=""/>
-                    </div>
-                    <div className="form-group w-100">
-                        <textarea name="message" rows="8" id="message" placeholder="Your Message" required=""></textarea>
-                    </div>
-                    <div className="form-group w-100 text-center">
-                        <button className="lab-btn"><span>Send Your Message</span></button>
-                    </div>
-                </form>
-                <p className="form-message"></p> 
-            </div>
-        </div>
-    </div>
+   
       {/* <!-- footer --> */}
       <div className="news-footer-wrap">
         <div className="fs-shape">
@@ -128,7 +107,7 @@ export default function ContactUs() {
         <div className="news-letter">
           <div className="container">
             <div className="section-wrapper">
-              <div className="news-title">
+              {/* <div className="news-title">
                 <h3>Want Us To Email You About Special Offers And Updates?</h3>
               </div>
               <div className="news-form">
@@ -138,23 +117,14 @@ export default function ContactUs() {
                     <input type="submit" name="submit" value="Subscribe Now" />
                   </div>
                 </form>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
         {/* <!-- Newsletter Section Ending Here --> */}
 
         {/* <!-- Footer Section Start Here --> */}
-        <footer>
-
-          <div className="footer-bottom style-2">
-            <div className="container">
-              <div className="section-wrapper">
-                <p>Copyrights © 2023 All Rights Services</p>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <Footers />
         {/* <!-- Footer Section Ending Here --> */}
       </div>
       {/* <!-- footer --> */}

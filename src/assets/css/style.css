@@ -1072,7 +1072,7 @@ footer.style-2 .footer-top .footer-item.our-address .footer-inner .footer-conten
 .section-header .subtitle.desc-color,
 p {
   color: #555555;
-    text-decoration: none;
+  text-decoration: none;
 
 }
 
@@ -1125,7 +1125,7 @@ footer.style-2 .footer-bottom,
 .clients-slider-nav,
 .course-navi {
   text-align: center;
-    text-decoration: none;
+  text-decoration: none;
 
 }
 
@@ -1779,6 +1779,217 @@ footer.style-2 .footer-top .footer-item.twitter-post .footer-inner .footer-conte
   background: #3b5998;
 }
 
+.ac_typ {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.rgstne_pge .gndre label {
+  display: inline-block;
+}
+
+.rgstne_pge .gndre label .color-red {
+  margin: 0;
+}
+
+.rgstne_pge label {
+  display: flex;
+}
+
+.rgstne_pge label .color-red {
+  margin-left: 5px;
+}
+
+.account-form label.emle_lab {
+  display: block;
+  text-align: left;
+}
+
+.account-form .form-group input.form-control {
+  width: 100%;
+}
+
+.color-red {
+  color: #f00;
+}
+
+.sftl-content a,
+.course-item .course-inner .course-content a,
+.breadcrumb.justify-content-center a {
+  text-decoration: none;
+}
+
+.banner-thumb img.nav-logo {
+  width: 524px;
+  display: block;
+  margin: 0 auto;
+}
+
+.section-wrapper .nav-tabs .nav-link.active,
+.account-wrapper .nav-tabs .nav-link.active {
+  background-image: linear-gradient(to left, #0080ff, #1d4dfa);
+  color: #fff;
+  border: 0;
+}
+
+.section-wrapper .nav-tabs .nav-link,
+.account-wrapper .nav-tabs .nav-link {
+  background: #fff;
+  color: #000;
+  border: 0;
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.section-wrapper .nav-tabs,
+.account-wrapper .nav-tabs {
+  border: 0;
+  justify-content: center;
+}
+
+.ac_typ_in_out {
+  display: flex;
+}
+
+.section-wrapper #nav-tabContent {
+  border-radius: 16px;
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0 0 10px #eee;
+}
+
+.login-section .section-wrapper h3.title {
+  margin-bottom: 20px;
+}
+
+.enquiry-form {
+  border-radius: 16px;
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0 0 10px #eee;
+
+}
+
+.student-feedbak-section .col {
+  z-index: 1;
+}
+
+.enq_stst_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.enq_stst_btn>div {
+  width: 30%;
+  margin-right: 10px;
+}
+
+.enq_stst_btn input.form-control {
+  height: 48px;
+}
+
+.pnd_st svg {
+  color: #F9E8B0;
+}
+
+.aprv_st svg {
+  color: #26c976;
+}
+
+.enq_sts_hd p {
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  margin: 40px 0;
+}
+
+.enq_sts_txt {
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+}
+
+.new_rgstne_pge {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.new_rgstne_pge .ac_typ label {
+  margin-bottom: 10px;
+}
+
+.new_rgstne_pge .ac_typ {
+  display: block;
+  margin: 0;
+}
+
+.ac_typ_in_out .ac_typ_in {
+  margin-right: 10px;
+}
+
+.account-form .form-group .ac_typ_in_out input {
+  margin: 0 !important;
+}
+
+.login-section .section-wrapper {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.header-top-area .left li.scroller {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.new_rgstne_pge .form-group {
+  width: 48%;
+}
+
+.login_logo {
+  display: block;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.login_logo img {
+  margin: 0 auto;
+  display: block;
+}
+
+.logn_pge .inerdive {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-section.logn_pge .account-wrapper {
+  max-width: 70%;
+}
+
+.signup-frm {
+  width: 50%;
+}
+.signup-frm input.form-control {
+  padding-left: 30px;
+}
+.signup-frm .mt-2{position: relative;}
+.icofont-email,.icofont-ui-password {
+  position: absolute;
+  left: 6px;
+  top: 12px;
+}
+.group-select-section .select-item select{background-color: #fff;}
+
+.modal-header.pageheader-section.style-2 {
+  padding: 20px 0;
+}
 /* *****========= All Keyframes  ===============****** */
 @keyframes angle-move {
 
@@ -2400,23 +2611,35 @@ button {
 
 /*Account Section Starts Here*/
 .account-wrapper {
+  /* box-shadow: 0px 0px 10px 0px rgba(136, 136, 136, 0.1); */
+  /* padding: 60px 80px; */
+  max-width: 545px;
+  margin: 0 auto;
+  /*-webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+   border-radius: 4px; */
+  background: transparent;
+}
+
+.account-wrapper #nav-tabContent {
   box-shadow: 0px 0px 10px 0px rgba(136, 136, 136, 0.1);
   padding: 60px 80px;
-  max-width: 545px;
+  max-width: 100%;
   margin: 0 auto;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
+  background: #fff url("../images/back-img.png") center center no-repeat;
 }
 
 @media (max-width: 767px) {
-  .account-wrapper {
+  .account-wrapper #nav-tabContent {
     padding: 50px 40px;
   }
 }
 
 @media screen and (max-width: 499px) {
-  .account-wrapper {
+  .account-wrapper #nav-tabContent {
     padding: 40px 15px;
   }
 }
@@ -2764,7 +2987,7 @@ button {
 }
 
 .course-item .course-inner .course-content {
-  padding: 30px 15px 0;
+  padding: 15px;
 }
 
 @media (min-width: 576px) {
@@ -4174,6 +4397,7 @@ button {
     padding: 15px;
   }
 }
+
 .header-wrapper .menu-area .login {
   color: #1c32bd;
   border-radius: 2px 0 0 2px;
@@ -7302,7 +7526,7 @@ button {
 
 .achieve-part .col .achieve-item .achieve-inner .achieve-content .lab-btn {
   background: #f9e8b0;
-    text-decoration: none;
+  text-decoration: none;
 
 }
 
@@ -8265,7 +8489,7 @@ button {
 }
 
 .map-area .maps {
-  height: 479px;
+  height: 502px;
   border: 10px solid #fff;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -8302,20 +8526,24 @@ button {
     width: calc(50% - 15px);
   }
 }
+
 .enquiry-body select.form-select,
 .enquiry-body input.form-control,
 .contact-form .form-group input {
-    border: 1px solid #f0f0f0;
-    border-radius: 4px;
-    background-color: #fcfcfc;
-    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
-    height: 57px;
-    padding: 0 25px;
-  }
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+  background-color: #fcfcfc;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+  height: 57px;
+  padding: 0 25px;
+}
+
 .contact-section .contact-form .form-group textarea,
 .contact-section .enquiry-body select.form-select,
 .contact-section .enquiry-body input.form-control,
-.contact-section .contact-form .form-group input{box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.4);}
+.contact-section .contact-form .form-group input {
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.4);
+}
 
 .fm_inr_dv input[type="checkbox"] {
   width: 20px;
@@ -8323,13 +8551,21 @@ button {
   position: relative;
   top: 4px;
 }
-.fm_inr_dv.ortr-div input[type="checkbox"]{width: 30px;}
+
+.fm_inr_dv.ortr-div input[type="checkbox"] {
+  width: 30px;
+}
+
 .bg-lab-cus {
   background: #f7f7f7;
   display: block;
   padding: 10px;
 }
-.howyou .fm_inr_dv input[type="radio"]{width: 20px;}
+
+.howyou .fm_inr_dv input[type="radio"] {
+  width: 20px;
+}
+
 .fm_inr_dv {
   display: flex;
   justify-content: flex-start;
@@ -8337,6 +8573,7 @@ button {
   text-align: left;
   margin-bottom: 30px;
 }
+
 .enquiry-body textarea.form-control,
 .contact-form .form-group textarea {
   border: 1px solid #f0f0f0;
@@ -8771,12 +9008,14 @@ button {
     text-align: right;
     margin-top: 0;
   }
+  
 }
 
 @media (min-width: 768px) {
   .blog-single .section-wrapper .post-item .post-inner .post-content .tags-section .scocial-media {
     width: calc(100% / 2);
   }
+
 }
 
 .widget {
@@ -9244,58 +9483,16 @@ footer.style-2 .footer-top.dark-view * {
 }
 
 /*# sourceMappingURL=style.css.map */
-
-.ac_typ {
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
+@media screen and (max-width:768px) {
+.login-section.logn_pge .account-wrapper {
+  max-width: 100%;
 }
-.rgstne_pge .gndre label {
-  display: inline-block;
+.account-wrapper #nav-tabContent {
+  padding: 30px;
 }
-  .rgstne_pge .gndre label .color-red{
-  margin: 0;
+.logn_pge .inerdive{display: block;}
+.signup-frm {
+  width: 100%;
 }
-.rgstne_pge label{display: flex;}
-.rgstne_pge label .color-red{margin-left: 5px;} 
-.account-form label.emle_lab{display: block; text-align: left;}
-.account-form .form-group input.form-control{width: 100%;}
-.color-red {
-  color: #f00;
+.signup-image{display: none;}
 }
-.sftl-content a,
-.course-item .course-inner .course-content a,
-.breadcrumb.justify-content-center a {
-  text-decoration: none;
-}
-.banner-thumb img.nav-logo{
-  width: 524px;
-  display: block;
-  margin: 0 auto;
-}
-
-.enquiry-form {
-  border-radius: 10px;
-  background: #fff;
-  padding: 20px 30px;
-
-}
-.student-feedbak-section .col {
-  z-index: 1;
-}
-.enq_stst_btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.enq_stst_btn > div{width: 30%; margin-right: 10px;}
-.enq_stst_btn input.form-control{height: 48px;}
-.pnd_st svg{color: #F9E8B0; }
-.aprv_st svg{color: #26c976;}
-.enq_sts_hd p {
-  font-size: 24px;
-  line-height: 28px;
-  text-align: center;
-  margin: 40px 0;
-}
-.enq_sts_txt{font-size: 18px; line-height: 24px; text-align: center;}

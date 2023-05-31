@@ -7,8 +7,18 @@ import course3 from '../assets/images/course/03.jpg'
 import course4 from '../assets/images/course/04.jpg'
 import course5 from '../assets/images/course/05.jpg'
 import course6 from '../assets/images/course/06.jpg'
+import Footers from './Footers'
+import { useNavigate } from 'react-router-dom'
 
 export default function Courses() {
+
+  var navigate = useNavigate()
+
+  const goto = (path) =>{
+    navigate(path)
+  }
+
+
   return (
 
     <>
@@ -20,8 +30,8 @@ export default function Courses() {
                 <h2>Archives: Courses</h2>
                 <nav aria-label="breadcrumb">
                   <ol className="breadcrumb justify-content-center">
-                    <li className="breadcrumb-item"><a href="#">Home</a></li>
-                    <li className="breadcrumb-item active" aria-current="page">Course Page</li>
+                    <li className="breadcrumb-item" onClick={()=>{goto("/")}}><a>Home</a></li>
+                    <li className="breadcrumb-item active" aria-current="page" onClick={()=>{goto("/courses")}}>Courses</li>
                   </ol>
                 </nav>
               </div>
@@ -138,7 +148,7 @@ export default function Courses() {
                           <a className="ca-name">Session 2023-2025</a>
                         </div>
                         <div className="course-btn">
-                          <a href="" className="lab-btn-text">Read More <i className="icofont-external-link"></i></a>
+                        <a href="" className="lab-btn-text" data-bs-target="#addContactModal" data-bs-toggle="modal" data-bs-dismiss="modal">Read More <i className="icofont-external-link"></i></a>
                         </div>
                       </div>
                     </div>
@@ -161,7 +171,7 @@ export default function Courses() {
                           <a className="ca-name">Session 2023-2025</a>
                         </div>
                         <div className="course-btn">
-                          <a href="" className="lab-btn-text">Read More <i className="icofont-external-link"></i></a>
+                        <a href="" className="lab-btn-text" data-bs-target="#addContactModal" data-bs-toggle="modal" data-bs-dismiss="modal">Read More <i className="icofont-external-link"></i></a>
                         </div>
                       </div>
                     </div>
@@ -184,7 +194,7 @@ export default function Courses() {
                           <a className="ca-name">Session 2023-2025</a>
                         </div>
                         <div className="course-btn">
-                          <a href="" className="lab-btn-text">Read More <i className="icofont-external-link"></i></a>
+                        <a href="" className="lab-btn-text" data-bs-target="#addContactModal" data-bs-toggle="modal" data-bs-dismiss="modal">Read More <i className="icofont-external-link"></i></a>
                         </div>
                       </div>
                     </div>
@@ -209,7 +219,7 @@ export default function Courses() {
                           <a className="ca-name">Session 2023-2025</a>
                         </div>
                         <div className="course-btn">
-                          <a href="" className="lab-btn-text">Read More <i className="icofont-external-link"></i></a>
+                        <a href="" className="lab-btn-text" data-bs-target="#addContactModal" data-bs-toggle="modal" data-bs-dismiss="modal">Read More <i className="icofont-external-link"></i></a>
                         </div>
                       </div>
                     </div>
@@ -234,7 +244,7 @@ export default function Courses() {
                           <a className="ca-name">Session 2023-2025</a>
                         </div>
                         <div className="course-btn">
-                          <a href="" className="lab-btn-text">Read More <i className="icofont-external-link"></i></a>
+                        <a href="" className="lab-btn-text" data-bs-target="#addContactModal" data-bs-toggle="modal" data-bs-dismiss="modal">Read More <i className="icofont-external-link"></i></a>
                         </div>
                       </div>
                     </div>
@@ -259,7 +269,7 @@ export default function Courses() {
                           <a className="ca-name">Session 2023-2025</a>
                         </div>
                         <div className="course-btn">
-                          <a href="" className="lab-btn-text">Read More <i className="icofont-external-link"></i></a>
+                        <a href="" className="lab-btn-text" data-bs-target="#addContactModal" data-bs-toggle="modal" data-bs-dismiss="modal">Read More <i className="icofont-external-link"></i></a>
                         </div>
                       </div>
                     </div>
@@ -282,7 +292,7 @@ export default function Courses() {
         <div className="news-letter">
           <div className="container">
             <div className="section-wrapper">
-              <div className="news-title">
+              {/* <div className="news-title">
                 <h3>Want Us To Email You About Special Offers And Updates?</h3>
               </div>
               <div className="news-form">
@@ -292,23 +302,14 @@ export default function Courses() {
                     <input type="submit" name="submit" value="Subscribe Now" />
                   </div>
                 </form>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
         {/* <!-- Newsletter Section Ending Here --> */}
 
         {/* <!-- Footer Section Start Here --> */}
-        <footer>
-
-          <div className="footer-bottom style-2">
-            <div className="container">
-              <div className="section-wrapper">
-                <p>Copyrights © 2023 All Rights Services</p>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <Footers />
         {/* <!-- Footer Section Ending Here --> */}
       </div>
       {/* <!-- footer --> */}

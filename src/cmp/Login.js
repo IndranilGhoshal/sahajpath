@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import Logo from '../assets/images/logo.jpeg'
+import Logo from '../assets/images/logo.png'
 import newsfoot1 from '../assets/images/03.png'
 import newsfoot2 from '../assets/images/04.png'
+import signupimg from '../assets/images/signup-image.png'
+import signinimg from '../assets/images/signin-image.png'
 import { useNavigate } from "react-router-dom";
 import { userLogin } from '../Services/userServices';
 import { adminLogin } from '../Services/adminServices';
+import Footers from './Footers'
 
 
 export default function Login() {
@@ -16,26 +19,10 @@ export default function Login() {
 
     const [email, setEmail]=useState('')
     const [password, setPassword]=useState('')
-    const [type, setType]=useState('')
 
 
     const login=()=>{
 
-        if(type=='admin'){
-        var data ={
-            "email":email,
-            "password":password
-        }
-        adminLogin(data).then(result=>{
-            // console.log(result)
-            if(result.data.success){
-                sessionStorage.setItem('admin', JSON.stringify(result.data))
-                navigate("/admin/dashboard")
-            }
-        })
-        }
-
-        if(type=='student'){
         var data ={
             "email":email,
             "password":password
@@ -47,7 +34,21 @@ export default function Login() {
                 navigate("/users/dashboard")
             }
         })
+    }
+
+    const adminlogin=()=>{
+
+        var data ={
+            "email":email,
+            "password":password
         }
+        adminLogin(data).then(result=>{
+            // console.log(result)
+            if(result.data.success){
+                sessionStorage.setItem('admin', JSON.stringify(result.data))
+                navigate("/admin/dashboard")
+            }
+        })
     }
   return (
     <>
@@ -59,8 +60,8 @@ export default function Login() {
                                 <h2>Login</h2>
                                 <nav aria-label="breadcrumb">
                                     <ol className="breadcrumb justify-content-center">
-                                        <li className="breadcrumb-item"><a href="index.html">Home</a></li>
-                                        <li className="breadcrumb-item active" aria-current="page">Login</li>
+                                        <li className="breadcrumb-item" onClick={()=>{goto("/")}}><a>Home</a></li>
+                                        <li className="breadcrumb-item active" aria-current="page" onClick={()=>{goto("/login")}}>Login</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -70,14 +71,30 @@ export default function Login() {
             </div>
 
 
+            
 
 
-    <div className="login-section padding-tb section-bg">
+
+    <div className="login-section logn_pge padding-tb section-bg">
         <div className="container">
             <div className="account-wrapper">
-                <h3 className="title">Login</h3>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Student Login</button>
+                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Admin Login</button>
+            </div>
+            <div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <div className='inerdive'>
+  <div class="signup-image">
+<figure><img className='sinupi' src={signupimg} /></figure>
+</div>
+<div className='signup-frm'>
+    <span className='login_logo'>
+    <img className='logn_dv' src={Logo} />
+    </span>
+  <h3 className="title">Student Login</h3>
             <div className="account-form">
-            <div className="form-group">
+            {/* <div className="form-group">
                 
                 <div className='ac_typ'><label className='font-weight-500'>Account Type</label>
                 <div className='ac_typ_in'><input type='radio' name='account' id='admin' className='mx-2' value='admin' onChange={(e)=>{setType(e.target.value)}}/>
@@ -89,16 +106,17 @@ export default function Login() {
                     
                 </div>
                 </div>
-            </div>
+            </div> */}
             <div className='mt-2'>
             <label className='font-weight-500 emle_lab'>Email</label>
-            <div className='mt-2'>
+            <div className='mt-2'><i class="icofont-email"></i>
             <input className='form-control' type='text' value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
             </div>
             </div>
             <div className='mt-2'>
             <label className='font-weight-500 emle_lab'>Password</label>
             <div className='mt-2'>
+            <i class="icofont-ui-password"></i>
             <input className='form-control' type='password' value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
             </div>
             </div>
@@ -112,6 +130,60 @@ export default function Login() {
             
 
         </div>
+</div>
+  </div></div>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+  <div className='inerdive'>
+  <div class="signup-image">
+<figure><img className='sinupi' src={signinimg} /></figure>
+</div>
+<div className='signup-frm'>
+    <span className='login_logo'>
+    <img className='logn_dv' src={Logo} />
+    </span>
+  <h3 className="title">Admin Login</h3>
+            <div className="account-form">
+            {/* <div className="form-group">
+                
+                <div className='ac_typ'><label className='font-weight-500'>Account Type</label>
+                <div className='ac_typ_in'><input type='radio' name='account' id='admin' className='mx-2' value='admin' onChange={(e)=>{setType(e.target.value)}}/>
+                    <label htmlFor='admin'>Admin</label>
+                    
+                </div>
+                <div className='ac_typ_in'><input type='radio' name='account' id='student' className='mx-2' value='student' onChange={(e)=>{setType(e.target.value)}}/>
+                    <label htmlFor='student'>Student</label>
+                    
+                </div>
+                </div>
+            </div> */}
+            <div className='mt-2'>
+            <label className='font-weight-500 emle_lab'>Email</label>
+            <div className='mt-2'><i class="icofont-email"></i>
+            <input className='form-control' type='text' value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
+            </div>
+            </div>
+            <div className='mt-2'>
+            <label className='font-weight-500 emle_lab'>Password</label>
+            <div className='mt-2'>
+            <i class="icofont-ui-password"></i>
+            <input className='form-control' type='password' value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
+            </div>
+            </div>
+            <div className='mx-auto d-grid gap-2 mt-4'>
+            <button className='btn btn-primary btn-lg' onClick={adminlogin}>Login</button>
+            </div>
+            {/* <div className='mt-4'>
+                <div className='text-center'><p>Are you new user?</p></div>
+                <div className='text-center'><p>Please <span className='font-weight-500 cursor-pointer' onClick={()=>{goto('/signup')}}>Sign Up</span></p></div>
+            </div> */}
+            
+
+        </div>
+  </div></div></div>
+</div>
+
+
+               
     </div>
     </div>
     </div>
@@ -125,7 +197,7 @@ export default function Login() {
                 <div className="news-letter">
                     <div className="container">
                         <div className="section-wrapper">
-                            <div className="news-title">
+                            {/* <div className="news-title">
                                 <h3>Want Us To Email You About Special Offers And Updates?</h3>
                             </div>
                             <div className="news-form">
@@ -135,23 +207,14 @@ export default function Login() {
                                         <input type="submit" name="submit" value="Subscribe Now" />
                                     </div>
                                 </form>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
                 {/* <!-- Newsletter Section Ending Here --> */}
 
                 {/* <!-- Footer Section Start Here --> */}
-                <footer>
-
-                    <div className="footer-bottom style-2">
-                        <div className="container">
-                            <div className="section-wrapper">
-                                <p>Copyrights © 2023 All Rights Services</p>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+                <Footers />
                 {/* <!-- Footer Section Ending Here --> */}
             </div>
             {/* <!-- footer --> */}
