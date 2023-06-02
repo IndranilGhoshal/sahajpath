@@ -140,12 +140,7 @@ export default function Layout() {
             </Accordion>
             <Accordion>
                 <AccordionSummary>
-                    <Link style={{color:'black', textDecoration:'none'}} to='/users/admission'> Admission Form</Link>
-                </AccordionSummary>
-            </Accordion>
-            <Accordion>
-                <AccordionSummary>
-                    <Link style={{color:'black', textDecoration:'none'}} to='/users/admission'> Admission Status</Link>
+                    <Link style={{color:'black', textDecoration:'none'}} to='/users/registrationstatus'> Registration Status</Link>
                 </AccordionSummary>
             </Accordion>
           </List>

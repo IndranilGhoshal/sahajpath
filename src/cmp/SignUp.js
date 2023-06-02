@@ -12,6 +12,8 @@ import $ from "jquery";
 import { useNavigate } from "react-router-dom";
 import { allCourse, courseDetails } from '../Services/courseServices';
 import Footers from './Footers'
+import { getPayId } from '../Services/common'
+import { registration } from '../Services/userServices'
 
 
 
@@ -56,7 +58,7 @@ export default function SignUp() {
         console.log(response.razorpay_payment_id);
         if (response.razorpay_payment_id) {
           alert("Payment Successfully!")
-          localStorage.setItem('payee_id', response.razorpay_payment_id)
+          sessionStorage.setItem('payee_id', response.razorpay_payment_id)
         }
       },
       "prefill": {
@@ -115,6 +117,8 @@ export default function SignUp() {
   const [pinCodeErr, setPinCodeErr] = useState(false)
   const [courseErr, setCourseErr] = useState(false)
   const [registrationFeesErr, setRegistrationFeesErr] = useState(false)
+
+
 
 
   function goto(path) {
@@ -212,20 +216,59 @@ export default function SignUp() {
       err++
     }
 
-    // if(err==0){
+    if(err==0){
     setPaymentTab(false)
     setTimeout(() => {
       $('#nav-profile-tab').click()
     }, 100);
-    // }
+    }
   }
 
+
+  const [payErr, setPayErr] = useState(false)
+
+
   const onSubmitPay = () =>{
-    setCompleteTab(false)
-    setTimeout(() => {
-      $("#nav-contact-tab").click()
-    }, 100);
+    setPayErr(false)
+    var err = 0
+    if(!getPayId()){
+      setPayErr(true)
+      err++
+    }
+
+    if(err==0){
+
+
+      var data = {
+        "name":name,
+        "email":email,
+        "password":password,
+        "gender":gender,
+        "contactNo":contactNo,
+        "dateOfBirth":dateOfBirth,
+        "address":address,
+        "pinCode":pinCode,
+        "course":course,
+        "registrationFees":registrationFees,
+        "paymentId":getPayId()
+      }
+
+
+      registration(data).then(result=>{
+        if(result.data.success){
+          sessionStorage.clear()
+          setCompleteTab(false)
+          setTimeout(() => {
+            $("#nav-contact-tab").click()
+          }, 100);
+        }
+      })
+    }
+    
   }
+
+
+  
 
 
   return (
@@ -298,7 +341,6 @@ export default function SignUp() {
             <div class="tab-content" id="nav-tabContent">
               {/* Personal details */}
               <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                {/* <h3 className="title">Registration</h3> */}
                 <div className="account-form rgstne_pge">
                   <div className='new_rgstne_pge'>
                     <div className="form-group">
@@ -405,7 +447,7 @@ export default function SignUp() {
                         <div className="form-group">
                           <label className='font-weight-500'>Total Course Fees:</label>
                           <div className='mt-2'>
-                            <div style={{ textAlign: "left" }}>{courseFullFees}</div>
+                            <div style={{ textAlign: "left" }}>₹ {courseFullFees}</div>
                           </div>
                         </div> : null
                     }
@@ -415,7 +457,7 @@ export default function SignUp() {
                         <div className="form-group">
                           <label className='font-weight-500'>Per {courseType} Fees:</label>
                           <div className='mt-2'>
-                            <div style={{ textAlign: "left" }}>{courseTypeFees}</div>
+                            <div style={{ textAlign: "left" }}>₹ {courseTypeFees}</div>
                           </div>
                         </div> : null
                     }
@@ -499,6 +541,9 @@ export default function SignUp() {
                                   <button className="App-link" onClick={displayRazorpay}>
                                     Pay ₹10000.00
                                   </button>
+                                  {
+                                    payErr?<div className='color-red font-size-14'>Please Pay</div>:null
+                                  }
                                 </div>
                               </div>
                             </div>
@@ -523,10 +568,10 @@ export default function SignUp() {
               <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                 <p className='aprv_st'><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-patch-check-fill" viewBox="0 0 16 16">
                   <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z" />
-                </svg> Success Payment</p>
+                </svg> Successful Registration</p>
 
                 <div className='mx-auto mt-4 text-center'>
-                  <button className='btn btn-primary btn-lg'>Go to Home Page</button>
+                  <button className='btn btn-primary btn-lg' onClick={()=>{goto("/login")}}>Go to Login</button>
                 </div>
               </div>
 

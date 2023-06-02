@@ -34,7 +34,7 @@ export default function Layout() {
                                 <li className='scroller'>
                                     <i className="icofont-ui-call"></i>
                                     
-                                    <marquee scrolldelay="300" width="130px">+91 8240 759 778 , +91 8240 759 778 , +91 8240 759 778 , +91 8240 759 778</marquee>
+                                    <marquee scrolldelay="300" width="130px">+91 8240 759 778 , +91 8250 065 159 , +91 9874 918 752 , +91 9674 440 028</marquee>
 
                                 </li>
                                 <li>

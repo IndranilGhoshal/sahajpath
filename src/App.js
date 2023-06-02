@@ -20,17 +20,17 @@ import Enquiry from "./cmp/Enquiry";
 import Protected from "./cmp/user/Protected";
 import Users from "./cmp/user/Users";
 import Dashboard from "./cmp/user/Dashboard";
-import Admission from "./cmp/user/Admission";
 import ProtectedAdmin from "./cmp/admin/ProtectedAdmin";
 import Admin from "./cmp/admin/Admin";
 import DashboardAdmin from "./cmp/admin/DashboardAdmin";
-import AdmissionList from "./cmp/admin/AdmissionList";
 import EnquiryList from "./cmp/admin/EnquiryList";
 import SetSession from "./cmp/admin/SetSession";
 import SetCourse from "./cmp/admin/SetCourse";
 import EnquiryStatus from "./cmp/EnquiryStatus";
 import EnquiryDetails from "./cmp/admin/EnquiryDetails";
 import EnquiryAccept from "./cmp/admin/EnquiryAccept";
+import RegistrationStatus from "./cmp/user/RegistrationStatus";
+import RegistrationList from "./cmp/admin/RegistrationList";
 
 
 function App() {
@@ -59,7 +59,7 @@ function App() {
             }
           > 
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="admission" element={<Admission />} />
+          <Route path="registrationstatus" element={<RegistrationStatus />} />
 
         </Route>
 
@@ -73,7 +73,7 @@ function App() {
           <Route path="dashboard" element={<DashboardAdmin />} />
           <Route path="setsession" element={<SetSession />} />
           <Route path="setcourseapplied" element={<SetCourse />} />
-          <Route path="admissionlist" element={<AdmissionList />} />
+          <Route path="registrationlist" element={<RegistrationList />} />
           <Route path="enquirylist" element={<EnquiryList />} />
           <Route path="enquiryAcceptlist" element={<EnquiryAccept />} />
           <Route path="enquirydetails/:id" element={<EnquiryDetails />} />

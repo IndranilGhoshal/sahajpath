@@ -1855,11 +1855,41 @@ footer.style-2 .footer-top .footer-item.twitter-post .footer-inner .footer-conte
 }
 
 .section-wrapper #nav-tabContent {
-  border-radius: 16px;
-  background: #fff;
-  padding: 30px;
-  box-shadow: 0 0 10px #eee;
+  background: #fff url("../images/back-img.png") center center no-repeat;
+  border-radius: 4px;
+  box-shadow: 0 0 10px 0 hsla(0, 0%, 53%, .1);
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 60px 80px;
+  position: relative;
 }
+.section-wrapper #nav-tabContent::after {
+  width: 100px;
+  height: 10px;
+  top: -10px;
+  left: 0;
+  position: absolute;
+content: "";
+}
+.section-wrapper #nav-tabContent::before {
+  width: 10px;
+  height: 100px;
+  top: -10px;
+  left: -10px;
+  position: absolute;
+content: "";
+}
+.section-wrapper #nav-tabContent #nav-contact p{
+  text-align: center;
+  font-size: 24px;
+  margin: 20px 0 80px 0;
+}
+.section-wrapper #nav-tabContent #collapseExample{background-color: #fff;}
+.section-wrapper #nav-tabContent::after, .section-wrapper #nav-tabContent::before {
+  background: #68bb0b;
+  border-bottom-right-radius: 12px;
+}
+
 
 .login-section .section-wrapper h3.title {
   margin-bottom: 20px;
@@ -1976,20 +2006,30 @@ footer.style-2 .footer-top .footer-item.twitter-post .footer-inner .footer-conte
 .signup-frm {
   width: 50%;
 }
+
 .signup-frm input.form-control {
   padding-left: 30px;
 }
-.signup-frm .mt-2{position: relative;}
-.icofont-email,.icofont-ui-password {
+
+.signup-frm .mt-2 {
+  position: relative;
+}
+
+.icofont-email,
+.icofont-ui-password {
   position: absolute;
   left: 6px;
   top: 12px;
 }
-.group-select-section .select-item select{background-color: #fff;}
+
+.group-select-section .select-item select {
+  background-color: #fff;
+}
 
 .modal-header.pageheader-section.style-2 {
   padding: 20px 0;
 }
+
 /* *****========= All Keyframes  ===============****** */
 @keyframes angle-move {
 
@@ -9008,7 +9048,7 @@ button {
     text-align: right;
     margin-top: 0;
   }
-  
+
 }
 
 @media (min-width: 768px) {
@@ -9484,15 +9524,23 @@ footer.style-2 .footer-top.dark-view * {
 
 /*# sourceMappingURL=style.css.map */
 @media screen and (max-width:768px) {
-.login-section.logn_pge .account-wrapper {
-  max-width: 100%;
-}
-.account-wrapper #nav-tabContent {
-  padding: 30px;
-}
-.logn_pge .inerdive{display: block;}
-.signup-frm {
-  width: 100%;
-}
-.signup-image{display: none;}
+  .login-section.logn_pge .account-wrapper {
+    max-width: 100%;
+  }
+
+  .account-wrapper #nav-tabContent {
+    padding: 30px;
+  }
+
+  .logn_pge .inerdive {
+    display: block;
+  }
+
+  .signup-frm {
+    width: 100%;
+  }
+
+  .signup-image {
+    display: none;
+  }
 }
