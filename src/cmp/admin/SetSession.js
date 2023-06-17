@@ -10,6 +10,10 @@ export default function SetSession() {
     const [end, setEnd] = useState('')
 
 
+    const [startErr, setStartErr] = useState(false)
+    const [endErr, setEndErr] = useState(false)
+
+
 
     useEffect(() => {
         allSessionFun()
@@ -24,18 +28,38 @@ export default function SetSession() {
     }
 
     const onSubmit = () => {
-        var data = {
-            "start": start,
-            "end": end
+        setStartErr(false)
+        setEndErr(false)
+
+        var err = 0
+
+        if(start==''){
+            setStartErr(true)
+            err++
         }
-        addSession(data).then(result => {
-            if (result.data.success) {
-                NotificationManager.success(result.data.message);
-                setStart("")
-                setEnd("")
-                allSessionFun()
+
+        if(end==''){
+            setEndErr(true)
+            err++
+        }
+
+
+        if(err==0){
+            var data = {
+                "start": start,
+                "end": end
             }
-        })
+            addSession(data).then(result => {
+                if (result.data.success) {
+                    NotificationManager.success(result.data.message);
+                    setStart("")
+                    setEnd("")
+                    allSessionFun()
+                }else{
+                    NotificationManager.error(result.data.message);
+                }
+            })
+        }
     }
 
     const [editBtn, setEditBtn] = useState(false)
@@ -47,6 +71,8 @@ export default function SetSession() {
         setEnd(val.end)
         setEditId(val.id)
         setEditBtn(true)
+        setStartErr(false)
+        setEndErr(false)
     }
 
     const onReset = () => {
@@ -54,39 +80,61 @@ export default function SetSession() {
         setEnd("")
         setEditId("")
         setEditBtn(false)
+        setStartErr(false)
+        setEndErr(false)
     }
 
     const onEditBtn = () => {
-        var data = {
-            "id": editId,
-            "start": start,
-            "end": end
+
+        setStartErr(false)
+        setEndErr(false)
+
+        var err = 0
+
+        if(start==''){
+            setStartErr(true)
+            err++
         }
 
-        // console.log(data)
-        editSession(data).then(result => {
-            if (result.data.success) {
-                NotificationManager.success(result.data.message);
-                setStart("")
-                setEnd("")
-                setEditId("")
-                setEditBtn(false)
-                allSessionFun()
-            }
-        })
+        if(end==''){
+            setEndErr(true)
+            err++
+        }
 
+        if(err==0){
+            var data = {
+                "id": editId,
+                "start": start,
+                "end": end
+            }
+    
+            editSession(data).then(result => {
+                if (result.data.success) {
+                    NotificationManager.success(result.data.message);
+                    setStart("")
+                    setEnd("")
+                    setEditId("")
+                    setEditBtn(false)
+                    allSessionFun()
+                }else{
+                    NotificationManager.error(result.data.message);
+                }
+            })
+        }
     }
 
 
-    const onDelete = (val) =>{
+    const onDelete = (val) => {
         var data = {
-            "id":val
+            "id": val
         }
 
-        deleteSession(data).then(result=>{
-            if(result.data.success){
+        deleteSession(data).then(result => {
+            if (result.data.success) {
                 NotificationManager.success(result.data.message);
                 allSessionFun()
+            }else{
+                NotificationManager.error(result.data.message);
             }
         })
     }
@@ -101,44 +149,43 @@ export default function SetSession() {
                 <div className='session-body mt-2'>
                     <div className='row'>
 
-                        <div className='col-sm-6'>
+                        <div className='col-sm-4'>
                             <label className='font-weight-500'>Session Start:</label>
                             <div className='mt-2'>
                                 <input type='number' className='form-control' value={start} onChange={(e) => { setStart(e.target.value) }} />
                             </div>
+                            {
+                               startErr?<span className='color-red font-size-14'>Enter the start session</span>:null
+                            }
                         </div>
 
-                        <div className='col-sm-6'>
+                        <div className='col-sm-4'>
                             <label className='font-weight-500'>Session End:</label>
                             <div className='mt-2'>
                                 <input type='number' className='form-control' value={end} onChange={(e) => { setEnd(e.target.value) }} />
                             </div>
+                            {
+                                endErr?<span className='color-red font-size-14'>Enter the end session</span>:null
+                            }
                         </div>
 
-                    </div>
 
-                    <div className='row'>
-                        <div className='col-sm-6'>
+                        <div className='col-sm-4 submits_reset'>
 
                             {
                                 editBtn ?
-                                    <div className='mx-auto d-grid gap-2 mt-4'>
-                                        <button className='btn btn-primary btn-lg' onClick={onEditBtn}>Edit</button>
+                                    <div className='d-grid gap-2 mt-4'>
+                                        <button className='btn btn-primary btn-lg submits' onClick={onEditBtn}><i class="icofont-ui-edit"></i> Edit</button>
                                     </div>
                                     :
-                                    <div className='mx-auto d-grid gap-2 mt-4'>
-                                        <button className='btn btn-primary btn-lg' onClick={onSubmit}>Submit</button>
+                                    <div className='d-grid gap-2 mt-4'>
+                                        <button className='btn btn-primary btn-lg submits' onClick={onSubmit}>Submit</button>
                                     </div>
                             }
 
 
-
-
-                        </div>
-
-                        <div className='col-sm-6'>
-                            <div className='mx-auto d-grid gap-2 mt-4'>
-                                <button className='btn btn-secondary btn-lg' onClick={onReset}>Reset</button>
+                            <div className='d-grid gap-2 mt-4 ms-3'>
+                                <button className='btn btn-secondary btn-lg resets' onClick={onReset}>Reset</button>
                             </div>
                         </div>
 
@@ -167,38 +214,38 @@ export default function SetSession() {
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
+                        <tbody>
+                            {
+                                sessionList.length == 0 ?
+                                    <>
 
-                        {
-                            sessionList.length == 0 ?
-                                <>
-                                    <tbody>
                                         <tr>
                                             <td colSpan='4' className='text-center'>Session not Added. Please add session.</td>
                                         </tr>
-                                    </tbody>
-                                </>
-                                :
-                                <>
-                                    {
-                                        sessionList.map((item, i) => (
-                                            <tbody>
+
+                                    </>
+                                    :
+                                    <>
+                                        {
+                                            sessionList.map((item, i) => (
+
                                                 <tr>
                                                     <th scope="row">{i + 1}.</th>
                                                     <td>{item.start}</td>
                                                     <td>{item.end}</td>
                                                     <td>
-                                                        <button type="button" className="btn btn-primary btn-sm" onClick={()=>{ onEdit(item)}}>Edit</button>
+                                                        <button type="button" className="btn btn-primary btn-sm" onClick={() => { onEdit(item) }}><i class="icofont-ui-edit"></i>  Edit</button>
 
-                                                        <button type="button" className="btn btn-secondary btn-sm mx-2" onClick={()=>{ onDelete(item.id)}}>Delete</button>
+                                                        <button type="button" className="btn btn-secondary btn-sm mx-2" onClick={() => { onDelete(item.id) }}><i class="icofont-ui-delete"></i> Delete</button>
                                                     </td>
                                                 </tr>
-                                            </tbody>
-                                        ))
-                                    }
-                                </>
-                        }
 
+                                            ))
+                                        }
+                                    </>
+                            }
 
+                        </tbody>
                     </table>
 
                 </div>

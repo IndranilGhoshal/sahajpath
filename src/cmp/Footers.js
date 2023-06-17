@@ -8,7 +8,7 @@ export default function Footers() {
                 <div className="footer-bottom style-2">
                     <div className="container">
                         <div className="section-wrapper">
-                            <p>Copyrights © 2023 All Rights Services</p>
+                            <p>Copyrights © Achiever Solutions All Rights Services</p>
                         </div>
                     </div>
                 </div>

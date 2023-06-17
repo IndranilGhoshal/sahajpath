@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { getUserId } from '../../Services/common'
-import { userDetails } from '../../Services/userServices'
+import { useNavigate, useParams } from 'react-router-dom'
+import { userDetails, userStatus } from '../../Services/userServices'
 import { allCourse } from '../../Services/courseServices'
 import { allSession } from '../../Services/sessionServices'
 
 
-export default function RegistrationStatus() {
+export default function RegistrationDetails() {
+
+    let { id } = useParams()
+    let navigate = useNavigate()
 
     const [details, setDetails] = useState({})
+    const [status, setStatus] = useState('')
+
 
     useEffect(() => {
         registrationDetailsFun()
@@ -17,10 +22,11 @@ export default function RegistrationStatus() {
 
     const registrationDetailsFun = () => {
         var data = {
-            "id": getUserId().response.id
+            "id": id
         }
         userDetails(data).then(result => {
             setDetails(result.data.response)
+            setStatus(result.data.response.status)
         })
     }
 
@@ -33,6 +39,7 @@ export default function RegistrationStatus() {
         })
     }
 
+
     const [sessionList, setSessionList] = useState([])
 
     const allSessionFun = () => {
@@ -42,14 +49,32 @@ export default function RegistrationStatus() {
         })
     }
 
+    const onApproved = () => {
+
+        var data = {
+            "id": id,
+            "status": status
+        }
+
+        userStatus(data).then(result => {
+            if (result.data.success) {
+                navigate("/admin/registrationlist")
+            }
+        })
+
+    }
+
+
+
+
     return (
         <>
-            <div className='session-list-head'>Registration Status</div>
+            <div className='session-list-head'>Registration Details</div>
             <div className='regst_stus'>
                 <div className='row'>
                     <div className='col-sm-12'>
                         <ul>
-                        <li><label>Session:</label><div>
+                            <li><label>Session:</label><div>
                                 {
                                     sessionList.map((item, i) => (
                                         item.id == details.session ? item.start +'-'+ item.end : null
@@ -74,29 +99,30 @@ export default function RegistrationStatus() {
 
                             </div></li>
                             <li> <label>Registration Fees:</label><div>₹{details.registrationFee}</div></li>
-                            <li> <label>Status:</label> <div>
-
-                                {
-                                    details.status == "Not Paid" ? <span className="badge bg-warning text-dark">{details.status}</span> : null
-                                }
-
-                                {
-                                    details.status == "Paid" ? <span className="badge bg-success">{details.status}</span> : null
-                                }
-
-                                {
-                                    details.status == "Not Paid" ? <span className='mx-2'>(Your payment is not done. Please contact the institution.)</span> : null
-                                }
-
-                                
-
-                            </div></li>
+                            <li> <label>Status:</label>
+                                <div>
+                                    {
+                                        details.status == "Paid" ?
+                                            <><span class="badge bg-success">{details.status}</span></> :
+                                            <select className='form-control' value={status} onChange={(e) => { setStatus(e.target.value) }}>
+                                                <option value="Not Paid">Not Paid</option>
+                                                <option value="Paid">Paid</option>
+                                            </select>
+                                    }
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>
+                {
+                    details.status == "Paid" ?
+                        null :
+                        <div className='mx-auto d-grid gap-2 mt-4'>
+                            <button className='btn btn-primary btn-lg submits' onClick={onApproved}>Approved</button>
+                        </div>
+                }
+
             </div>
-
-
         </>
     )
 }

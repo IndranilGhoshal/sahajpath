@@ -76,7 +76,7 @@ export default function Layout() {
     const navigate = useNavigate()
 
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
   
     const handleDrawerOpen = () => {
       setOpen(true);
@@ -110,7 +110,7 @@ export default function Layout() {
             </Typography>
 
             <span style={{flex:'1'}}></span>
-            <button className='btn btn-primary' onClick={logout}>Logout</button>
+            <button className='btn btn-dark' onClick={logout}><i class="icofont-logout"></i> Logout</button>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -135,12 +135,12 @@ export default function Layout() {
           <List>
             <Accordion>
                 <AccordionSummary>
-                    <Link style={{color:'black', textDecoration:'none'}} to='/users/dashboard'> Dashboard</Link>
+                    <Link to='/users/dashboard'><i class="icofont-dashboard-web"></i> Dashboard</Link>
                 </AccordionSummary>
             </Accordion>
             <Accordion>
                 <AccordionSummary>
-                    <Link style={{color:'black', textDecoration:'none'}} to='/users/registrationstatus'> Registration Status</Link>
+                    <Link to='/users/registrationstatus'><i class="icofont-file-document"></i> Registration Status</Link>
                 </AccordionSummary>
             </Accordion>
           </List>

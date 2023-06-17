@@ -5,6 +5,7 @@ import { checkStatus } from '../Services/enquiryServices'
 import Footers from './Footers'
 import { useNavigate } from 'react-router-dom'
 // import StripeCheckout from 'react-stripe-checkout';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 
 
@@ -35,19 +36,31 @@ export default function EnquiryStatus() {
         setPending(false)
         setAccept(false)
         setDes("")
-        var data = {
-            "genKey": genKey
+
+        var err=0
+
+        if(genKey==''){
+            NotificationManager.error("Enter application no");
+            err++
         }
-        checkStatus(data).then(result => {
-            if (result.data.success) {
-                if(result.data.response.status == "Pending"){
-                    setPending(true)
-                }else{
-                    setAccept(true)
-                    setDes(result.data.response.admin_description)
-                }
+
+
+        if(err==0){
+            var data = {
+                "genKey": genKey
             }
-        })
+            checkStatus(data).then(result => {
+                if (result.data.success) {
+                    if(result.data.response.status == "Pending"){
+                        setPending(true)
+                    }else{
+                        setAccept(true)
+                        setDes(result.data.response.admin_description)
+                    }
+                }
+            })
+        }
+        
     }
 
 
@@ -80,17 +93,19 @@ export default function EnquiryStatus() {
                                     <div className='col-sm-12'>
 
                                         <div className='enq_stst_btn'>
-                                            <div><input type='text' className='form-control' placeholder='Enter application No.' value={genKey} onChange={(e) => { setGenKey(e.target.value) }} /></div>
-                                            <button className='btn btn-primary btn-lg' onClick={ckeckStatusFun}>Submit</button>
+                                            <div>
+                                                <input 
+                                                type='text' 
+                                                className='form-control' 
+                                                placeholder='Enter application No.' 
+                                                value={genKey} 
+                                                onChange={(e) => { setGenKey(e.target.value) }} />
+                                            </div>
+                                            
+                                            <button className='btn btn-primary btn-lg' onClick={ckeckStatusFun}><i class="fa fa-paper-plane-o"></i> Submit</button>
+                                        
                                         </div>
-
-                                        {/* <StripeCheckout
-                                      token={onToken}
-                                      stripeKey="pk_test_51NCJBlSDCtLbLShRvRa0PwbazveOiMLCOAUPwdg7ZobR5FaQSG2WOD2ZQjHErfXdf1TFVKlrYVzeBvVvGUPclJsh00ff3MxTMK"
-                                    /> */}
-
-
-
+                                        
 
                                     </div>
 
@@ -161,6 +176,8 @@ export default function EnquiryStatus() {
                 {/* <!-- Footer Section Ending Here --> */}
             </div>
             {/* <!-- footer --> */}
+            <NotificationContainer />
+
         </>
     )
 }

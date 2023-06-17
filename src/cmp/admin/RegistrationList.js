@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { allUsers } from '../../Services/userServices'
 
+import { useNavigate } from 'react-router-dom'
+
+
 
 export default function RegistrationList() {
+
+  var navigate = useNavigate()
+
   const [registrationList, setRegistrationList] = useState([])
 
   useEffect(() => {
@@ -17,9 +23,17 @@ export default function RegistrationList() {
     })
   }
 
+  const goto = (val) =>{
+    navigate("/admin/registrationdetails/"+val)
+  }
+
   return (
     <>
-      <h3>Registration List</h3>
+     <div className='enquiry-list'>
+        <div className='enquiry-list-head'>
+        Registration List
+        </div>
+        <div className='enquiry-list-body'>
       <table class="table">
         <thead>
           <tr>
@@ -36,7 +50,7 @@ export default function RegistrationList() {
               <>
                 <tbody>
                   <tr>
-                    <td colSpan='6' className='text-center'>Session not Added. Please add session.</td>
+                    <td colSpan='6' className='text-center'>Data not Found.</td>
                   </tr>
                 </tbody>
               </>
@@ -50,8 +64,16 @@ export default function RegistrationList() {
                         <td>{item.name}</td>
                         <td>{item.email}</td>
                         <td>{item.contactNo}</td>
-                        <td>{item.status}</td>
-                        <td><button className='btn btn-primary'>View</button></td>
+                        <td>
+                          {
+                            item.status == "Paid"?<span className="badge bg-success">{item.status}</span>:null
+                          }
+                          {
+                            item.status == "Not Paid"?<span className="badge bg-warning text-dark">{item.status}</span>:null
+                          }
+                          
+                          </td>
+                        <td><button type="button" className="btn btn-primary btn-sm" onClick={()=>{goto(item.id)}}><i class="icofont-eye-alt"></i> View</button></td>
                       </tr>
                     </tbody>
                   ))
@@ -59,7 +81,7 @@ export default function RegistrationList() {
               </>
           }
       </table>
-
+</div></div>
 
     </>
   )

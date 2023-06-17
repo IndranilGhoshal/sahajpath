@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
-import Logo from '../assets/images/logo.jpeg'
-import { addEnquiry} from '../Services/enquiryServices'
+import React, { useEffect, useState } from 'react'
+import { addEnquiry } from '../Services/enquiryServices'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import newsfoot1 from '../assets/images/03.png'
 import newsfoot2 from '../assets/images/04.png'
 import { useNavigate } from 'react-router-dom'
 import Footers from './Footers';
+import { allCourse } from '../Services/courseServices';
 
 export default function Enquiry() {
 
-    
+
     var navigate = useNavigate()
 
-    const goto = (path) =>{
-      navigate(path)
+    const goto = (path) => {
+        navigate(path)
     }
 
 
@@ -39,7 +39,7 @@ export default function Enquiry() {
         setCourse("")
         setInform("")
         setDescription("")
-        
+
     };
     const handleShow = () => setShow(true);
 
@@ -70,6 +70,7 @@ export default function Enquiry() {
     const [addressErr, setAddressErr] = useState(false)
     const [pinCodeErr, setPinCodeErr] = useState(false)
     const [emailErr, setEmailErr] = useState(false)
+    const [emailValidErr, setEmailValidErr] = useState(false)
     const [mobileNoErr, setMobileNoErr] = useState(false)
     const [anotherMobileNoErr, setAnotherMobileNoErr] = useState(false)
     const [whatsappNoErr, setWhatsappNoErr] = useState(false)
@@ -81,7 +82,34 @@ export default function Enquiry() {
     const [informErr, setInformErr] = useState(false)
     const [descriptionErr, setDescriptionErr] = useState(false)
 
-    const [key, setKey]=useState('')
+
+
+
+
+
+    const [key, setKey] = useState('')
+
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+
+    const [courseData, setCourseData] = useState([])
+
+
+    useEffect(() => {
+        getCoursesData()
+    }, [])
+
+    const getCoursesData = () => {
+        var data = {
+
+        }
+
+        allCourse(data).then(result => {
+            setCourseData(result.data.response)
+        })
+    }
+
+
 
 
     const onSubmit = () => {
@@ -93,6 +121,7 @@ export default function Enquiry() {
         setAddressErr(false)
         setPinCodeErr(false)
         setEmailErr(false)
+        setEmailValidErr(false)
         setMobileNoErr(false)
         setAnotherMobileNoErr(false)
         setWhatsappNoErr(false)
@@ -104,15 +133,15 @@ export default function Enquiry() {
         setInformErr(false)
         setDescriptionErr(false)
 
-        if (name == '') {
+        if (name.trim() == '') {
             setNameErr(true)
             err++
         }
-        if (fatherName == '') {
+        if (fatherName.trim() == '') {
             setFatherNameErr(true)
             err++
         }
-        if (fatherOccupation == '') {
+        if (fatherOccupation.trim() == '') {
             setFatherOccupationErr(true)
             err++
         }
@@ -120,17 +149,23 @@ export default function Enquiry() {
             setCasteErr(true)
             err++
         }
-        if (address == '') {
+        if (address.trim() == '') {
             setAddressErr(true)
             err++
         }
-        if (pinCode == '') {
+        if (pinCode.trim() == '') {
             setPinCodeErr(true)
             err++
         }
-        if (email == '') {
+        if (email.trim() == '') {
             setEmailErr(true)
             err++
+        }
+        if (email.trim()) {
+            if (!email.trim().match(mailformat)) {
+                setEmailValidErr(true)
+                err++
+            }
         }
         if (mobileNo == '') {
             setMobileNoErr(true)
@@ -199,9 +234,9 @@ export default function Enquiry() {
 
             addEnquiry(data).then(result => {
                 console.log(result.data)
-                if(result.data.success){
-                        setKey(result.data.response.key)
-                        handleShow()
+                if (result.data.success) {
+                    setKey(result.data.response.key)
+                    handleShow()
                 }
             })
         }
@@ -213,7 +248,7 @@ export default function Enquiry() {
     return (
         <>
 
-<div className="pageheader-section">
+            <div className="pageheader-section">
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
@@ -221,8 +256,8 @@ export default function Enquiry() {
                                 <h2>Enquiry Form</h2>
                                 <nav aria-label="breadcrumb">
                                     <ol className="breadcrumb justify-content-center">
-                                        <li className="breadcrumb-item" onClick={()=>{goto("/")}}><a>Home</a></li>
-                                        <li className="breadcrumb-item active" aria-current="page" onClick={()=>{goto("/enquiry")}}>Enquiry</li>
+                                        <li className="breadcrumb-item" onClick={() => { goto("/") }}><a>Home</a></li>
+                                        <li className="breadcrumb-item active" aria-current="page" onClick={() => { goto("/enquiry") }}>Enquiry</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -303,63 +338,66 @@ export default function Enquiry() {
                                                 addressErr ? <span className='color-red font-size-14'>Enter the address</span> : null
                                             }
                                         </div>
-                                        </div>
-                                        <div className='col-sm-4'>
+                                    </div>
+                                    <div className='col-sm-4'>
+                                        <div className='mt-2'>
+                                            <lable className='font-weight-500 color-blue'>Pin Code:</lable>
                                             <div className='mt-2'>
-                                                <lable className='font-weight-500 color-blue'>Pin Code:</lable>
-                                                <div className='mt-2'>
-                                                    <input type='text' className={`form-control input-border-blue ${pinCodeErr ? "error-fill" : ""}`} value={pinCode} onChange={(e) => { setPinCode(e.target.value) }} />
-                                                </div>
-                                                {
-                                                    pinCodeErr ? <span className='color-red font-size-14'>Enter the pin code</span> : null
-                                                }
-                                            </div></div>
-                                        <div className='col-sm-4'>
+                                                <input type='text' className={`form-control input-border-blue ${pinCodeErr ? "error-fill" : ""}`} maxLength={6} value={pinCode} onChange={(e) => { setPinCode(e.target.value) }} />
+                                            </div>
+                                            {
+                                                pinCodeErr ? <span className='color-red font-size-14'>Enter the pin code</span> : null
+                                            }
+                                        </div></div>
+                                    <div className='col-sm-4'>
+                                        <div className='mt-2'>
+                                            <lable className='font-weight-500 color-blue'>Email ID:</lable>
                                             <div className='mt-2'>
-                                                <lable className='font-weight-500 color-blue'>Email ID:</lable>
-                                                <div className='mt-2'>
-                                                    <input type='text' className={`form-control input-border-blue ${emailErr ? "error-fill" : ""}`} value={email} onChange={(e) => { setEmail(e.target.value) }} />
-                                                </div>
-                                                {
-                                                    emailErr ? <span className='color-red font-size-14'>Enter the email</span> : null
-                                                }
-                                            </div></div>
+                                                <input type='text' className={`form-control input-border-blue ${emailErr ? "error-fill" : ""}`} value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                                            </div>
+                                            {
+                                                emailErr ? <span className='color-red font-size-14'>Enter the email</span> : null
+                                            }
+                                            {
+                                                emailValidErr ? <div className='color-red font-size-14'>Enter Valid Email</div> : null
+                                            }
+                                        </div></div>
 
 
-                                        <div className='col-sm-4'>
+                                    <div className='col-sm-4'>
+                                        <div className='mt-2'>
+                                            <lable className='font-weight-500 color-blue'>Mobile No.:</lable>
                                             <div className='mt-2'>
-                                                <lable className='font-weight-500 color-blue'>Mobile No.:</lable>
-                                                <div className='mt-2'>
-                                                    <input type='text' className={`form-control input-border-blue ${mobileNoErr ? "error-fill" : ""}`} value={mobileNo} onChange={(e) => { setMobileNo(e.target.value) }} />
-                                                </div>
-                                                {
-                                                    mobileNoErr ? <span className='color-red font-size-14'>Enter the mobile no.</span> : null
-                                                }
+                                                <input type='text' maxLength={10} className={`form-control input-border-blue ${mobileNoErr ? "error-fill" : ""}`} value={mobileNo} onChange={(e) => { setMobileNo(e.target.value) }} />
                                             </div>
+                                            {
+                                                mobileNoErr ? <span className='color-red font-size-14'>Enter the mobile no.</span> : null
+                                            }
                                         </div>
-                                        <div className='col-sm-4'>
+                                    </div>
+                                    <div className='col-sm-4'>
+                                        <div className='mt-2'>
+                                            <lable className='font-weight-500 color-blue'>Parents Mobile No.:</lable>
                                             <div className='mt-2'>
-                                                <lable className='font-weight-500 color-blue'>Another Mobile No.:</lable>
-                                                <div className='mt-2'>
-                                                    <input type='text' className={`form-control input-border-blue ${anotherMobileNoErr ? "error-fill" : ""}`} value={anotherMobileNo} onChange={(e) => { setAnotherMobileNo(e.target.value) }} />
-                                                </div>
-                                                {
-                                                    anotherMobileNoErr ? <span className='color-red font-size-14'>Enter the another mobile no.</span> : null
-                                                }
+                                                <input type='text' maxLength={10} className={`form-control input-border-blue ${anotherMobileNoErr ? "error-fill" : ""}`} value={anotherMobileNo} onChange={(e) => { setAnotherMobileNo(e.target.value) }} />
                                             </div>
+                                            {
+                                                anotherMobileNoErr ? <span className='color-red font-size-14'>Enter the parents mobile no.</span> : null
+                                            }
                                         </div>
-                                        <div className='col-sm-4'>
+                                    </div>
+                                    <div className='col-sm-4'>
+                                        <div className='mt-2'>
+                                            <lable className='font-weight-500 color-blue'>Whatsapp No.:</lable>
                                             <div className='mt-2'>
-                                                <lable className='font-weight-500 color-blue'>Whatsapp No.:</lable>
-                                                <div className='mt-2'>
-                                                    <input type='text' className={`form-control input-border-blue ${whatsappNoErr ? "error-fill" : ""}`} value={whatsappNo} onChange={(e) => { setWhatsappNo(e.target.value) }} />
-                                                </div>
-                                                {
-                                                    whatsappNoErr ? <span className='color-red font-size-14'>Enter the whatsapp no.</span> : null
-                                                }
+                                                <input type='text' maxLength={10} className={`form-control input-border-blue ${whatsappNoErr ? "error-fill" : ""}`} value={whatsappNo} onChange={(e) => { setWhatsappNo(e.target.value) }} />
                                             </div>
+                                            {
+                                                whatsappNoErr ? <span className='color-red font-size-14'>Enter the whatsapp no.</span> : null
+                                            }
                                         </div>
-                                    
+                                    </div>
+
 
 
                                     <div className='col-sm-4'>
@@ -424,180 +462,34 @@ export default function Enquiry() {
 
                                         </div>
                                         {
-                                                languageErr ? <span className='color-red font-size-14'>Select the language</span> : null
-                                            }
+                                            languageErr ? <span className='color-red font-size-14'>Select the language</span> : null
+                                        }
                                     </div>
                                 </div>
                                 <div className='mt-2'>
                                     <lable className='font-weight-500 color-blue  bg-lab-cus mb-3'>Willing Course (✓):</lable>
                                     <div className='mt-2'>
                                         <div className='row'>
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "M.P / H.S"}
-                                                    value='M.P / H.S'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>M.P / H.S  <span className='color-blue'> (Board/Council)</span></label>
-                                            </div>
-                                            </div>
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "BBA / MBA (HR/FINANCE/SALES & MKT.)"}
-                                                    value='BBA / MBA (HR/FINANCE/SALES & MKT.)'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>BBA / MBA (HR/FINANCE/SALES & MKT.)  <span className='color-blue'> (UGC Approved)</span></label>
-                                            </div>
-                                            </div>
-
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "B.A / B.Sc / B.Com"}
-                                                    value='B.A / B.Sc / B.Com'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>B.A / B.Sc / B.Com  <span className='color-blue'> (UGC Approved)</span></label>
-                                            </div>
-                                            </div>
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "BCA / MCA / B.Sc (IT) / M.Sc (IT)"}
-                                                    value='BCA / MCA / B.Sc (IT) / M.Sc (IT)'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>BCA / MCA / B.Sc (IT) / M.Sc (IT)  <span className='color-blue'> (UGC Approved)</span></label>
-                                            </div>
-                                            </div>
-
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "M.A / M.Sc / M.Com"}
-                                                    value='M.A / M.Sc / M.Com'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>M.A / M.Sc / M.Com <span className='color-blue'> (UGC Approved)</span></label>
-                                            </div>
-                                            </div>
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "B. Lib / B.Lis / M.Lis / M.Lis"}
-                                                    value='B. Lib / B.Lis / M.Lis / M.Lis'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>B. Lib / B.Lis / M.Lis / M.Lis <span className='color-blue'> (UGC Approved)</span></label>
-                                            </div>
-                                            </div>
-
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "D.El.Ed / B.Ed. / M.Ed"}
-                                                    value='D.El.Ed / B.Ed. / M.Ed'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>D.El.Ed / B.Ed. / M.Ed <span className='color-blue'> (NCTE Approved)</span></label>
-                                            </div>
-                                            </div>
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "Dep. Engg.(Civil/Mechanical/Electrical)"}
-                                                    value='Dep. Engg.(Civil/Mechanical/Electrical)'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>Dep. Engg.(Civil/Mechanical/Electrical) <span className='color-blue'> (AICTE Approved)</span></label>
-
-                                            </div></div>
-
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "B.P.Ed / M.P.Ed"}
-                                                    value='B.P.Ed / M.P.Ed'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>B.P.Ed / M.P.Ed <span className='color-blue'> (NCTE Approved)</span></label>
-                                            </div>
-                                            </div>
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "B.Tech / M.Tech / B.Engg / M.Engg"}
-                                                    value='B.Tech / M.Tech / B.Engg / M.Engg'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>B.Tech / M.Tech / B.Engg / M.Engg <span className='color-blue'> (AICTE Approved)</span></label>
-                                            </div>
-                                            </div>
-
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "D.Pham / B.Pham / M.Pham / Pham.D"}
-                                                    value='D.Pham / B.Pham / M.Pham / Pham.D'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>D.Pham / B.Pham / M.Pham / Pham.D <span className='color-blue'> (PCI Approved)</span></label>
-                                            </div>
-                                            </div>
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "M.Phil / P.hd"}
-                                                    value='M.Phil / P.hd'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>M.Phil / P.hd <span className='color-blue'> (UGC Approved)</span></label>
-
-                                            </div></div>
-
-                                            <div className='col-sm-4'><div className='fm_inr_dv'>
-                                                <input
-                                                    type='checkbox'
-                                                    checked={course === "LLB / LLM"}
-                                                    value='LLB / LLM'
-                                                    onChange={(e) => { setCourse(e.target.value) }}
-                                                />
-                                                <label className='mx-2 color-blue'>LLB / LLM <span className='color-blue'> (BCI Approved)</span></label>
-
-                                            </div></div>
-                                            <div className='col-sm-4'>
-                                                <div className='fm_inr_dv ortr-div'>
-                                                    <input
-                                                        type='checkbox'
-                                                        checked={course === "other"}
-                                                        value='other'
-                                                        onChange={(e) => { setCourse(e.target.value) }}
-                                                    />
-                                                    <label className='mx-2 color-blue'>Other</label>
-                                                    <input className='mx-3 form-control input-border-blue width-50' type='text' />
-                                                </div></div>
-
-                                            <div className='col-sm-4'>
-                                                <div className='fm_inr_dv ortr-div'>
-                                                    <input
-                                                        type='checkbox'
-                                                        checked={course === "ANM / GNM / B.Sc (Nur) / Post Basic Nursing / M.Sc (Nur)"}
-                                                        value='ANM / GNM / B.Sc (Nur) / Post Basic Nursing / M.Sc (Nur)'
-                                                        onChange={(e) => { setCourse(e.target.value) }}
-                                                    />
-                                                    <label className='mx-2 color-blue'>ANM / GNM / B.Sc (Nur) / Post Basic Nursing / M.Sc (Nur) <span className='color-blue'> (INC Approved)</span></label>
-                                                </div>
-                                            </div>
+                                            {
+                                                courseData.map((item, index) => (
+                                                    <div className='col-sm-4'>
+                                                        <div className='fm_inr_dv'>
+                                                            <input
+                                                                type='checkbox'
+                                                                checked={course === item.course}
+                                                                value={item.course}
+                                                                onChange={(e) => { setCourse(e.target.value) }}
+                                                            />
+                                                            <label className='mx-2 color-blue'>{item.course}<span className='color-blue'> ({item.courseApprovedBy})</span></label>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            }
                                         </div>
-
-
                                     </div>
                                     {
-                                                courseErr ? <span className='color-red font-size-14'>Select the course</span> : null
-                                            }
+                                        courseErr ? <span className='color-red font-size-14'>Select the course</span> : null
+                                    }
                                 </div>
                                 <div className='mt-2'>
                                     <lable className='font-weight-500 color-blue  bg-lab-cus mb-3'>How you inform by</lable>
@@ -616,8 +508,8 @@ export default function Enquiry() {
                                         </div>
                                     </div>
                                     {
-                                                informErr ? <span className='color-red font-size-14'>Select the inform by</span> : null
-                                            }
+                                        informErr ? <span className='color-red font-size-14'>Select the inform by</span> : null
+                                    }
                                 </div>
 
                                 <div className='mt-2'>
@@ -633,7 +525,7 @@ export default function Enquiry() {
 
 
                                 <div className='mx-auto mt-4 text-center'>
-                                    <button className='btn btn-primary btn-lg' onClick={onSubmit}>Submit</button>
+                                    <button className='btn btn-primary btn-lg' onClick={onSubmit}><i class="fa fa-paper-plane-o"></i> Submit</button>
                                 </div>
 
 

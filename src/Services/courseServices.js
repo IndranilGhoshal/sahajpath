@@ -12,3 +12,18 @@ export function allCourse(data){
 export function courseDetails(data){
     return axios.post(BASE_URL+'/api/course/courseDetails', data)
 }
+
+export function uploadFile(data) {
+    return fetch(BASE_URL + '/api/upload', {
+            method: 'POST',
+            body: data,
+    }).then(res => res.json())
+}
+
+export function editCourse(data){
+    return axios.post(BASE_URL+'/api/course/editCourse', data)
+}
+
+export function deleteCourse(data){
+    return axios.post(BASE_URL+'/api/course/deleteCourse', data)
+}

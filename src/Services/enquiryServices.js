@@ -25,3 +25,7 @@ export function addDescription(data){
 export function checkStatus(data){
     return axios.post(BASE_URL+'/api/enquiry/checkStatus', data)
 }
+
+export function deleteEnquiry(data){
+    return axios.post(BASE_URL+'/api/enquiry/deleteEnquiry', data)
+}

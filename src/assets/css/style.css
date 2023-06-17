@@ -1863,29 +1863,37 @@ footer.style-2 .footer-top .footer-item.twitter-post .footer-inner .footer-conte
   padding: 60px 80px;
   position: relative;
 }
+
 .section-wrapper #nav-tabContent::after {
   width: 100px;
   height: 10px;
   top: -10px;
   left: 0;
   position: absolute;
-content: "";
+  content: "";
 }
+
 .section-wrapper #nav-tabContent::before {
   width: 10px;
   height: 100px;
   top: -10px;
   left: -10px;
   position: absolute;
-content: "";
+  content: "";
 }
-.section-wrapper #nav-tabContent #nav-contact p{
+
+.section-wrapper #nav-tabContent #nav-contact p {
   text-align: center;
   font-size: 24px;
   margin: 20px 0 80px 0;
 }
-.section-wrapper #nav-tabContent #collapseExample{background-color: #fff;}
-.section-wrapper #nav-tabContent::after, .section-wrapper #nav-tabContent::before {
+
+.section-wrapper #nav-tabContent #collapseExample {
+  background-color: #fff;
+}
+
+.section-wrapper #nav-tabContent::after,
+.section-wrapper #nav-tabContent::before {
   background: #68bb0b;
   border-bottom-right-radius: 12px;
 }
@@ -2005,6 +2013,17 @@ content: "";
 
 .signup-frm {
   width: 50%;
+  position: relative;
+}
+
+.signup-frm::before {
+  background: #ddd;
+  width: 1px;
+  height: 100%;
+  content: "";
+  left: -45px;
+  top: 0;
+  position: absolute;
 }
 
 .signup-frm input.form-control {
@@ -2029,6 +2048,132 @@ content: "";
 .modal-header.pageheader-section.style-2 {
   padding: 20px 0;
 }
+
+.course-form .pageheader-section {
+  padding: 40px 20px;
+  border: 1px solid #eee;
+  overflow: hidden;
+  border-radius: 5px;
+  margin: 20px 0;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation0.MuiDrawer-paper.MuiDrawer-paperAnchorLeft.MuiDrawer-paperAnchorDockedLeft.css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
+  background-color: #26c976;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiAccordion-root.MuiAccordion-rounded.MuiAccordion-gutters.css-1elwnq4-MuiPaper-root-MuiAccordion-root {
+  background-color: transparent;
+  box-shadow: 0 0;
+  border: 0;
+}
+.MuiPaper-root.MuiPaper-elevation a i,
+.MuiPaper-root.MuiPaper-elevation p i{
+margin-right: 5px;
+  }
+.MuiAccordionSummary-content.MuiAccordionSummary-contentGutters a,
+.MuiPaper-root.MuiPaper-elevation a,
+.MuiPaper-root.MuiPaper-elevation p {
+  color: #fff;
+  text-decoration: none;
+}
+
+.css-1elwnq4-MuiPaper-root-MuiAccordion-root::before {
+  background-color: #ccc !important;
+}
+
+.MuiPaper-root.MuiPaper-elevation hr {
+  display: none;
+}
+
+.MuiAccordionDetails-root.css-15v22id-MuiAccordionDetails-root {
+  padding: 0 0 10px 34px;
+}
+
+.css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+  background-color: rgba(250, 250, 250, 0.2) !important;
+  color: #fff !important;
+}
+
+.btn.btn-secondary.btn-lg.resets,
+.btn.btn-primary.btn-lg.submits {
+  width: 130px;
+  margin: 0 auto;
+}
+
+.col-sm-4.submits_reset {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.col-sm-4.submits_reset .btn.btn-secondary.btn-lg.resets,
+.col-sm-4.submits_reset .btn.btn-primary.btn-lg.submits {
+  width: 130px;
+  margin: 7px auto !important;
+  padding: 0 !important;
+  font-size: 14px;
+  line-height: 18px;
+  height: 38px;
+  display: block;
+}
+
+.session-list-body table tbody tr td,
+.session-list-body table tbody tr th,
+.session-list-body table thead tr th,
+.enquiry-list-body table tbody tr td,
+.enquiry-list-body table tbody tr th,
+.enquiry-list-body table thead tr th {
+  padding: 20px;
+  border-color: #ccc !important;
+  vertical-align: middle;
+}
+
+.session-list-body table tbody tr,
+.session-list-body table thead tr,
+.enquiry-list-body table tbody tr,
+.enquiry-list-body table thead tr {
+  border-color: #ccc !important;
+}
+
+.session-list-body table thead,
+.enquiry-list-body table thead {
+  background: #eee;
+}
+.course-head,
+.session-head{
+  background: url("../images/list-icon.png") 0 1px no-repeat;
+  font-size: 20px;
+  margin: 0 0 30px;
+  padding-bottom: 10px;
+  padding-left: 40px;
+  border-bottom: 1px solid #ccc;
+  background-size: 24px;
+  color: #000;
+  font-weight: 500;
+}
+.course-list-head,
+.session-list-head,
+.enquiry-list-head {
+  background: url("../images/1950715.png") 0 1px no-repeat;
+  font-size: 20px;
+  margin: 0 0 30px;
+  padding-bottom: 10px;
+  padding-left: 40px;
+  border-bottom: 1px solid #ccc;
+  background-size: 24px;
+  color: #000;
+  font-weight: 500;
+}
+
+.session-form {
+  margin-bottom: 40px;
+}
+.regst_stus ul{list-style-type: none; padding: 0; margin: 0;}
+.regst_stus li{padding: 10px;display: flex; align-items: center;}
+.regst_stus li:nth-child(2n+1){background-color: #bfaaaa1f;}
+.regst_stus li label{width: 15%;}
+.regst_stus li>div{font-weight: 500;}
+
+
 
 /* *****========= All Keyframes  ===============****** */
 @keyframes angle-move {

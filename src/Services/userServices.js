@@ -16,3 +16,7 @@ export function allUsers(data){
 export function userDetails(data){
     return axios.post(BASE_URL+'/api/user/userDetails', data)
 }
+
+export function userStatus(data){
+    return axios.post(BASE_URL+'/api/user/userStatus', data)
+}

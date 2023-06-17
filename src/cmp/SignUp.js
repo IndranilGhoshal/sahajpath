@@ -1,96 +1,19 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import newsfoot1 from '../assets/images/03.png'
 import newsfoot2 from '../assets/images/04.png'
-import card1 from '../assets/images/card1.png'
-import card2 from '../assets/images/card2.png'
-import card3 from '../assets/images/card3.png'
-import card4 from '../assets/images/card4.png'
-import qrcd from '../assets/images/QR-Code.jpg'
 import $ from "jquery";
 
 
 import { useNavigate } from "react-router-dom";
 import { allCourse, courseDetails } from '../Services/courseServices';
 import Footers from './Footers'
-import { getPayId } from '../Services/common'
 import { registration } from '../Services/userServices'
+import { allSession } from '../Services/sessionServices';
 
 
 
 
 export default function SignUp() {
-
-  function loadScript(src) {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => {
-        resolve(true);
-      };
-      script.onerror = () => {
-        resolve(false);
-      };
-      document.body.appendChild(script);
-    });
-  }
-
-  async function displayRazorpay() {
-    const res = await loadScript(
-      "https://checkout.razorpay.com/v1/checkout.js"
-    );
-
-    if (!res) {
-      alert("Razorpay SDK failed to load. Are you online?");
-      return;
-    }
-
-
-
-    var options = {
-      "key": "rzp_test_7Vl0rR9pRIcrY4",
-      "amount": "",
-      "currency": "INR",
-      "name": "",
-      "description": "Test Transaction",
-      "image": "",
-      "order_id": "",
-      "handler": function (response) {
-        console.log(response.razorpay_payment_id);
-        if (response.razorpay_payment_id) {
-          alert("Payment Successfully!")
-          sessionStorage.setItem('payee_id', response.razorpay_payment_id)
-        }
-      },
-      "prefill": {
-        "name": "Indranil Ghoshal",
-        "email": "indranillghoshal@gmail.com",
-        "contact": "7908231967"
-      },
-      "notes": {
-        "address": "Razorpay Corporate Office"
-      },
-      "theme": {
-        "color": "#00FF00"
-      },
-      "error": {
-        "code": "BAD_REQUEST_ERROR",
-        "description": "Authentication failed due to incorrect otp",
-        "field": null,
-        "source": "customer",
-        "step": "payment_authentication",
-        "reason": "invalid_otp",
-        "metadata": {
-          "payment_id": "",
-          "order_id": ""
-        }
-      }
-    };
-
-    options.amount=registrationFees+"00"
-
-    const paymentObject = new window.Razorpay(options);
-    paymentObject.open();
-  }
 
   let navigate = useNavigate();
 
@@ -105,6 +28,7 @@ export default function SignUp() {
   const [pinCode, setPinCode] = useState('')
   const [course, setCourse] = useState('')
   const [registrationFees, setRegistrationFees] = useState('')
+  const [session, setSession] = useState('')
 
 
   const [nameErr, setNameErr] = useState(false)
@@ -117,8 +41,12 @@ export default function SignUp() {
   const [pinCodeErr, setPinCodeErr] = useState(false)
   const [courseErr, setCourseErr] = useState(false)
   const [registrationFeesErr, setRegistrationFeesErr] = useState(false)
+  const [sessionErr, setSessionErr] = useState(false)
+  const [validEmailErr, setValidEmailErr] = useState(false)
 
 
+
+  var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 
   function goto(path) {
@@ -126,9 +54,11 @@ export default function SignUp() {
   }
 
   const [courseList, setCourseList] = useState([])
+  const [sessionList, setSessionList] = useState([])
 
   useEffect(() => {
     allCourseFun()
+    allSessionFun()
   }, [])
 
   const allCourseFun = () => {
@@ -138,26 +68,14 @@ export default function SignUp() {
     })
   }
 
-  const [courseFullFees, setCourseFullFees] = useState("")
-  const [courseType, setCourseType] = useState("")
-  const [courseTypeFees, setCourseTypeFees] = useState("")
-
-  const getCourseDetails = (val) => {
-    setCourseFullFees("")
-    var data = {
-      "id": val
-    }
-
-    courseDetails(data).then(result => {
-      setCourseFullFees(result.data.response.courseFees)
-      setCourseType(result.data.response.courseType)
-      setCourseTypeFees(result.data.response.courseTypeFees)
+  const allSessionFun = () => {
+    var data = {}
+    allSession(data).then(result => {
+      setSessionList(result.data.response)
     })
-
   }
 
 
-  const [paymentTab, setPaymentTab] = useState(true)
   const [completeTab, setCompleteTab] = useState(true)
 
 
@@ -172,6 +90,8 @@ export default function SignUp() {
     setPinCodeErr(false)
     setCourseErr(false)
     setRegistrationFeesErr(false)
+    setValidEmailErr(false)
+    setSessionErr(false)
 
     var err = 0;
 
@@ -186,6 +106,12 @@ export default function SignUp() {
     if (email == "") {
       setEmailErr(true)
       err++
+    }
+    if (email.trim()) {
+      if (!email.trim().match(mailformat)) {
+        setValidEmailErr(true)
+        err++
+      }
     }
     if (password == "") {
       setPasswordErr(true)
@@ -215,47 +141,29 @@ export default function SignUp() {
       setRegistrationFeesErr(true)
       err++
     }
-
-    if(err==0){
-    setPaymentTab(false)
-    setTimeout(() => {
-      $('#nav-profile-tab').click()
-    }, 100);
-    }
-  }
-
-
-  const [payErr, setPayErr] = useState(false)
-
-
-  const onSubmitPay = () =>{
-    setPayErr(false)
-    var err = 0
-    if(!getPayId()){
-      setPayErr(true)
+    if (session == "") {
+      setSessionErr(true)
       err++
     }
 
-    if(err==0){
-
-
+    if (err == 0) {
       var data = {
-        "name":name,
-        "email":email,
-        "password":password,
-        "gender":gender,
-        "contactNo":contactNo,
-        "dateOfBirth":dateOfBirth,
-        "address":address,
-        "pinCode":pinCode,
-        "course":course,
-        "registrationFees":registrationFees,
-        "paymentId":getPayId()
+        "name": name,
+        "email": email,
+        "password": password,
+        "gender": gender,
+        "contactNo": contactNo,
+        "dateOfBirth": dateOfBirth,
+        "address": address,
+        "pinCode": pinCode,
+        "course": course,
+        "registrationFees": registrationFees,
+        "session":session
       }
 
 
-      registration(data).then(result=>{
-        if(result.data.success){
+      registration(data).then(result => {
+        if (result.data.success) {
           sessionStorage.clear()
           setCompleteTab(false)
           setTimeout(() => {
@@ -264,11 +172,10 @@ export default function SignUp() {
         }
       })
     }
-    
   }
 
 
-  
+
 
 
   return (
@@ -311,20 +218,6 @@ export default function SignUp() {
 
               <button
                 className="nav-link"
-                id="nav-profile-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-profile"
-                type="button"
-                role="tab"
-                aria-controls="nav-profile"
-                aria-selected="false"
-                disabled={paymentTab}
-              >
-                Payment
-              </button>
-
-              <button
-                className="nav-link"
                 id="nav-contact-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#nav-contact"
@@ -355,7 +248,7 @@ export default function SignUp() {
                     <div className="form-group">
                       <label className='font-weight-500'>Contact No.:</label>
                       <div className='mt-2'>
-                        <input type='text' className='form-control' value={contactNo} onChange={(e) => { setContactNo(e.target.value) }} />
+                        <input type='text' className='form-control' maxLength={10} value={contactNo} onChange={(e) => { setContactNo(e.target.value) }} />
                       </div>
                       {
                         contactNoErr ? <span className='color-red font-size-14'>Enter the contact no.</span> : null
@@ -368,6 +261,9 @@ export default function SignUp() {
                       </div>
                       {
                         emailErr ? <span className='color-red font-size-14'>Enter the email id</span> : null
+                      }
+                      {
+                        validEmailErr ? <div className='color-red font-size-14'>Enter Valid Email</div> : null
                       }
                     </div>
                     <div className="form-group">
@@ -419,7 +315,7 @@ export default function SignUp() {
                     <div className="form-group">
                       <label className='font-weight-500'>Pin Code:</label>
                       <div className='mt-2'>
-                        <input type='text' className='form-control' value={pinCode} onChange={(e) => { setPinCode(e.target.value) }} />
+                        <input type='text' className='form-control' maxLength={6} value={pinCode} onChange={(e) => { setPinCode(e.target.value) }} />
                       </div>
                       {
                         pinCodeErr ? <span className='color-red font-size-14'>Enter the pin code</span> : null
@@ -429,7 +325,7 @@ export default function SignUp() {
                     <div className="form-group">
                       <label className='font-weight-500'>Course:</label>
                       <div className='mt-2'>
-                        <select className='form-control' value={course} onChange={(e) => { setCourse(e.target.value); getCourseDetails(e.target.value) }} >
+                        <select className='form-control' value={course} onChange={(e) => { setCourse(e.target.value); }} >
                           <option value=''>Select</option>
                           {
                             courseList.map((item, i) => (
@@ -442,25 +338,23 @@ export default function SignUp() {
                         courseErr ? <span className='color-red font-size-14'>Select the course</span> : null
                       }
                     </div>
-                    {
-                      courseFullFees ?
-                        <div className="form-group">
-                          <label className='font-weight-500'>Total Course Fees:</label>
-                          <div className='mt-2'>
-                            <div style={{ textAlign: "left" }}>₹ {courseFullFees}</div>
-                          </div>
-                        </div> : null
-                    }
 
-                    {
-                      courseType ?
-                        <div className="form-group">
-                          <label className='font-weight-500'>Per {courseType} Fees:</label>
-                          <div className='mt-2'>
-                            <div style={{ textAlign: "left" }}>₹ {courseTypeFees}</div>
-                          </div>
-                        </div> : null
-                    }
+                    <div className="form-group">
+                      <label className='font-weight-500'>Session:</label>
+                      <div className='mt-2'>
+                        <select type='text' className='form-control' value={session} onChange={(e) => { setSession(e.target.value) }} >
+                        <option value=''>Select</option>
+                          {
+                            sessionList.map((item, i) => (
+                              <option value={item.id}>{item.start} - {item.end}</option>
+                            ))
+                          }
+                        </select>
+                      </div>
+                      {
+                        sessionErr ? <span className='color-red font-size-14'>Select the session</span> : null
+                      }
+                    </div>
 
                     <div className="form-group">
                       <label className='font-weight-500'>Registraion Fees:</label>
@@ -490,80 +384,6 @@ export default function SignUp() {
 
                 </div>
               </div>
-              {/* Payment */}
-              <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-
-                {/* payment */}
-                <div class="row">
-
-                  <div class="col-12 mt-4">
-                    <div class="py-3">
-                      <p class="mb-0 fw-bold h4">Payment Methods</p>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="card-body p-0">
-                      <p className='m-0'>
-                        <a class="btn btn-primary p-2 w-100 h-100 d-flex align-items-center justify-content-between"
-                          data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true"
-                          aria-controls="collapseExample">
-                          <span class="fw-bold">Payment Gateway</span>
-                          <span class="">
-                            <i class="fa fa-cc-visa" aria-hidden="true"></i>&nbsp;
-                            <i class="fa fa-cc-mastercard" aria-hidden="true"></i>&nbsp;
-                            <i class="fa fa-cc-discover" aria-hidden="true"></i>&nbsp;
-                            <i class="fa fa-cc-amex" aria-hidden="true"></i>
-
-                          </span>
-                        </a>
-                      </p>
-                      <div class="collapse show p-5 border" id="collapseExample">
-                        <div class="row">
-                          <div class="col-lg-6 mb-lg-0 col-sm-12 mb-3">
-                            <p class="h4 mb-0">Summary</p>
-                            <p class="mb-0"><span class="fw-bold">Name </span><span class="c-green">: {name}</span></p>
-                            <p class="mb-0"><span class="fw-bold">Course Name </span><span 
-                            class="c-green">: {
-                              courseList.map((item, i) => (
-                                item.id == course ?
-                                item.course
-                                :null
-                              ))
-                                                }</span></p>
-                            <p class="mb-0"><span class="fw-bold">Price </span><span
-                              class="c-green">: ₹10000.00</span></p>
-                          </div>
-                          <div class="col-lg-6 col-sm-12">
-                            {/* <form action="" class="form"> */}
-                            <div class="row">
-                              <div class="col-12">
-                                <div>
-                                  <button className="App-link" onClick={displayRazorpay}>
-                                    Pay ₹10000.00
-                                  </button>
-                                  {
-                                    payErr?<div className='color-red font-size-14'>Please Pay</div>:null
-                                  }
-                                </div>
-                              </div>
-                            </div>
-                            {/* </form> */}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-                <div className='mx-auto mt-4 text-center'>
-                  <button className='btn btn-primary btn-lg' onClick={onSubmitPay}>Submit</button>
-
-                </div>
-                {/* payment end */}
-
-
-              </div>
               {/* Complete */}
               <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                 <p className='aprv_st'><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-patch-check-fill" viewBox="0 0 16 16">
@@ -571,7 +391,7 @@ export default function SignUp() {
                 </svg> Successful Registration</p>
 
                 <div className='mx-auto mt-4 text-center'>
-                  <button className='btn btn-primary btn-lg' onClick={()=>{goto("/login")}}>Go to Login</button>
+                  <button className='btn btn-primary btn-lg' onClick={() => { goto("/login") }}>Go to Login</button>
                 </div>
               </div>
 

@@ -31,6 +31,7 @@ import EnquiryDetails from "./cmp/admin/EnquiryDetails";
 import EnquiryAccept from "./cmp/admin/EnquiryAccept";
 import RegistrationStatus from "./cmp/user/RegistrationStatus";
 import RegistrationList from "./cmp/admin/RegistrationList";
+import RegistrationDetails from "./cmp/admin/RegistrationDetails";
 
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
           <Route path="enquirylist" element={<EnquiryList />} />
           <Route path="enquiryAcceptlist" element={<EnquiryAccept />} />
           <Route path="enquirydetails/:id" element={<EnquiryDetails />} />
+          <Route path="registrationdetails/:id" element={<RegistrationDetails />} />
           
 
         </Route>

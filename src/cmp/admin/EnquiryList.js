@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { allEnquiry } from '../../Services/enquiryServices'
+import { allEnquiry, deleteEnquiry } from '../../Services/enquiryServices'
 import { useNavigate } from 'react-router-dom'
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+
 export default function EnquiryList() {
 
   const [enquiryList, setEnquiryList] = useState([])
@@ -23,8 +25,25 @@ export default function EnquiryList() {
   }
 
   const goto = (val) =>{
-
     navigate("/admin/enquirydetails/"+val)
+  }
+
+  const deleteEnquiryFun = (val) =>{
+
+    var data = {
+      "id":val
+    }
+
+    deleteEnquiry(data).then(result=>{
+
+      if(result.data.success){
+        NotificationManager.success(result.data.message);
+        allEnquiryFun()
+      }else{
+        NotificationManager.error(result.data.message);
+      }
+
+    })
 
   }
 
@@ -33,7 +52,7 @@ export default function EnquiryList() {
     <>
       <div className='enquiry-list'>
         <div className='enquiry-list-head'>
-          Enquiry List
+          Enquiry Pending List
         </div>
         <div className='enquiry-list-body'>
           <table class="table">
@@ -45,42 +64,46 @@ export default function EnquiryList() {
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
               </tr>
-            </thead>
+            </thead> 
+            <tbody>
 
             {
                             enquiryList.length == 0 ?
                                 <>
-                                    <tbody>
+                                   
                                         <tr>
-                                            <td colSpan='5s' className='text-center'>No Data Found</td>
+                                            <td colSpan='5' className='text-center'>No Data Found</td>
                                         </tr>
-                                    </tbody>
+                                    
                                 </>
                                 :
                                 <>
                                     {
                                         enquiryList.map((item, i) => (
-                                            <tbody>
+                                            
                                                 <tr>
                                                     <td scope="row">{i + 1}.</td>
                                                     <td>{item.name}</td>
                                                     <td>{item.email}</td>
-                                                    <td>{item.status}</td>
+                                                    <td><span class="badge bg-warning text-dark">{item.status}</span></td>
 
                                                     <td>
-                                                        <button type="button" className="btn btn-primary btn-sm" onClick={()=>{goto(item.id)}}>View</button>
-                                                        <button type="button" className="btn btn-secondary btn-sm mx-2">Delete</button>
+                                                        <button type="button" className="btn btn-primary btn-sm" onClick={()=>{goto(item.id)}}><i class="icofont-eye-alt"></i> View</button>
+                                                        <button type="button" className="btn btn-secondary btn-sm mx-2" onClick={()=>{deleteEnquiryFun(item.id)}}><i class="icofont-ui-delete"></i> Delete</button>
                                                     </td>
                                                 </tr>
-                                            </tbody>
+                                            
                                         ))
                                     }
                                 </>
                         }
+                        </tbody>
           </table>
         </div>
 
       </div>
+      <NotificationContainer />
+
 
     </>
   )

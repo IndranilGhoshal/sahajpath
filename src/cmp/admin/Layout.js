@@ -76,7 +76,7 @@ export default function Layout() {
   const navigate = useNavigate()
 
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -110,7 +110,7 @@ export default function Layout() {
           </Typography>
 
           <span style={{ flex: '1' }}></span>
-          <button className='btn btn-primary' onClick={logout}>Logout</button>
+          <button className='btn btn-dark' onClick={logout}><i class="icofont-logout"></i> Logout</button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -135,34 +135,34 @@ export default function Layout() {
         <List>
           <Accordion>
             <AccordionSummary>
-              <Link style={{ color: 'black', textDecoration: 'none' }} to='/admin/dashboard'> Dashboard</Link>
+              <Link to='/admin/dashboard'><i class="icofont-dashboard-web"></i> Dashboard</Link>
             </AccordionSummary>
           </Accordion>
           <Accordion>
             <AccordionSummary>
-              <Typography> Set Admission Details</Typography>
+              <Typography><i class="icofont-file-alt"></i> Set Admission Details</Typography>
             </AccordionSummary>
-            <AccordionDetails style={{ textAlign: "right" }}>
-              <Link style={{ color: 'black', textDecoration: 'none' }} to='/admin/setsession'> Set Session</Link>
+            <AccordionDetails>
+              <Link to='/admin/setsession'><i class="icofont-arrow-right"></i> Set Session</Link>
             </AccordionDetails>
-            <AccordionDetails style={{ textAlign: "right" }}>
-              <Link style={{ color: 'black', textDecoration: 'none' }} to='/admin/setcourseapplied'> Set Course</Link>
+            <AccordionDetails>
+              <Link to='/admin/setcourseapplied'> <i class="icofont-arrow-right"></i> Set Course</Link>
             </AccordionDetails>
           </Accordion>
           <Accordion>
             <AccordionSummary>
-              <Link style={{ color: 'black', textDecoration: 'none' }} to='/admin/registrationlist'> Registration List</Link>
+              <Link to='/admin/registrationlist'><i class="icofont-file-document"></i> Registration List</Link>
             </AccordionSummary>
           </Accordion>
           <Accordion>
             <AccordionSummary>
-              <Typography> Enquiry Details</Typography>
+              <Typography><i class="icofont-copy-invert"></i> Enquiry Details</Typography>
             </AccordionSummary>
-            <AccordionDetails style={{ textAlign: "right" }}>
-              <Link style={{ color: 'black', textDecoration: 'none' }} to='/admin/enquirylist'> Pending Enquiry</Link>
+            <AccordionDetails>
+              <Link to='/admin/enquirylist'> <i class="icofont-arrow-right"></i> Pending Enquiry</Link>
             </AccordionDetails>
-            <AccordionDetails style={{ textAlign: "right" }}>
-              <Link style={{ color: 'black', textDecoration: 'none' }} to='/admin/enquiryAcceptlist'> Accepted Enquiry</Link>
+            <AccordionDetails>
+              <Link to='/admin/enquiryAcceptlist'><i class="icofont-arrow-right"></i> Accepted Enquiry</Link>
             </AccordionDetails>
           </Accordion>
         </List>
