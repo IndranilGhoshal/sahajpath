@@ -179,13 +179,13 @@ export default function SetSession() {
                                     </div>
                                     :
                                     <div className='d-grid gap-2 mt-4'>
-                                        <button className='btn btn-primary btn-lg submits' onClick={onSubmit}>Submit</button>
+                                        <button className='btn btn-primary btn-lg submits' onClick={onSubmit}><i class="icofont-swoosh-right"></i> Submit</button>
                                     </div>
                             }
 
 
                             <div className='d-grid gap-2 mt-4 ms-3'>
-                                <button className='btn btn-secondary btn-lg resets' onClick={onReset}>Reset</button>
+                                <button className='btn btn-secondary btn-lg resets' onClick={onReset}><i class="icofont-ui-reply"></i> Reset</button>
                             </div>
                         </div>
 

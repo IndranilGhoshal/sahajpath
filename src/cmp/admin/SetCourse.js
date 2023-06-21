@@ -434,7 +434,7 @@ export default function SetCourse() {
                             <label className='font-weight-500'>Course Banner:</label>
                             <div className='mt-2'>
                                 <input type="file" id="file" onChange={uploadImg} style={{ display: 'none' }} accept="image/jpg,image/jpeg" />
-                                <button class="btn btn-primary" onClick={showUpload}>Upload</button>
+                                <button class="btn btn-primary" onClick={showUpload}><i class="icofont-swoosh-up"></i> Upload</button>
                             </div>
                             {
                                 courseBannerErr ? <span className='color-red font-size-14'>Enter course banner</span> : null
@@ -461,23 +461,23 @@ export default function SetCourse() {
                     </div>
 
                     <div className='row mt-2'>
-                        <div className='col-sm-6'>
+                        <div className='col-sm-12 d-flex justify-content-center'>
                         {
                                 editBtn ?
-                                    <div className='d-grid gap-2 mt-4'>
-                                        <button className='btn btn-primary btn-lg submits' onClick={onEditBtn}><i class="icofont-ui-edit"></i> Edit</button>
-                                    </div>
+                                    
+                                        <button className='btn btn-primary btn-lg submits  w-auto m-0' onClick={onEditBtn}><i class="icofont-ui-edit"></i> Edit</button>
+                                   
                                     :
-                                    <div className='d-grid gap-2 mt-4'>
-                                        <button className='btn btn-primary btn-lg submits' onClick={onSubmit}>Submit</button>
-                                    </div>
+                                   
+                                        <button className='btn btn-primary btn-lg submits  w-auto m-0' onClick={onSubmit}><i class="icofont-swoosh-right"></i> Submit</button>
+                                    
                             }
-                        </div>
-                        <div className='col-sm-6'>
-                            <div className='mx-auto d-grid gap-2 mt-4'>
-                                <button className='btn btn-secondary btn-lg resets' onClick={onReset}>Reset</button>
+                     
+                        
+                           
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><button className='btn btn-secondary btn-lg resets  w-auto m-0' onClick={onReset}><i class="icofont-ui-reply"></i> Reset</button>
                             </div>
-                        </div>
+                        
 
                     </div>
 
