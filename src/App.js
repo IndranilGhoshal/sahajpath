@@ -38,6 +38,14 @@ function App() {
   return (
     <>
     <BrowserRouter>
+    <div className="loadr">
+        <div className="loader_bg">
+          <div className="loader_body_bg"></div>
+          <div id="nest" className="loader_wait">
+            <span>&nbsp;</span>
+            </div>
+            </div>
+      </div>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />

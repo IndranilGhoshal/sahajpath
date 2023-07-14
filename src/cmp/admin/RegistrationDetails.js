@@ -3,6 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { userDetails, userStatus } from '../../Services/userServices'
 import { allCourse } from '../../Services/courseServices'
 import { allSession } from '../../Services/sessionServices'
+import { hideLoader, showLoader } from '../../Services/common'
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+
 
 
 export default function RegistrationDetails() {
@@ -55,10 +58,13 @@ export default function RegistrationDetails() {
             "id": id,
             "status": status
         }
-
+        showLoader()
         userStatus(data).then(result => {
+            hideLoader()
             if (result.data.success) {
                 navigate("/admin/registrationlist")
+            }else{
+                NotificationManager.error(result.data.message);
             }
         })
 
@@ -123,6 +129,8 @@ export default function RegistrationDetails() {
                 }
 
             </div>
+            <NotificationContainer />
+
         </>
     )
 }

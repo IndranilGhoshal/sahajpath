@@ -21,6 +21,7 @@ import MailIcon from '@mui/icons-material/Mail';
 
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { Accordion, AccordionDetails, AccordionSummary, Button } from '@mui/material';
+import { hideLoader, showLoader } from '../../Services/common';
 
 const drawerWidth = 240;
 
@@ -88,7 +89,15 @@ export default function Layout() {
 
   const logout = () => {
     sessionStorage.clear()
+    loader()
     navigate("/login")
+  }
+
+  const loader = () =>{
+    showLoader()
+    setTimeout(() => {
+      hideLoader()
+    }, 1000);
   }
 
   return (
@@ -135,7 +144,7 @@ export default function Layout() {
         <List>
           <Accordion>
             <AccordionSummary>
-              <Link to='/admin/dashboard'><i class="icofont-dashboard-web"></i> Dashboard</Link>
+              <Link onClick={loader} to='/admin/dashboard'><i class="icofont-dashboard-web"></i> Dashboard</Link>
             </AccordionSummary>
           </Accordion>
           <Accordion>
@@ -143,15 +152,15 @@ export default function Layout() {
               <Typography><i class="icofont-file-alt"></i> Set Admission Details</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Link to='/admin/setsession'><i class="icofont-arrow-right"></i> Set Session</Link>
+              <Link onClick={loader} to='/admin/setsession'><i class="icofont-arrow-right"></i> Set Session</Link>
             </AccordionDetails>
             <AccordionDetails>
-              <Link to='/admin/setcourseapplied'> <i class="icofont-arrow-right"></i> Set Course</Link>
+              <Link onClick={loader} to='/admin/setcourseapplied'> <i class="icofont-arrow-right"></i> Set Course</Link>
             </AccordionDetails>
           </Accordion>
           <Accordion>
             <AccordionSummary>
-              <Link to='/admin/registrationlist'><i class="icofont-file-document"></i> Registration List</Link>
+              <Link onClick={loader} to='/admin/registrationlist'><i class="icofont-file-document"></i> Registration List</Link>
             </AccordionSummary>
           </Accordion>
           <Accordion>
@@ -159,10 +168,10 @@ export default function Layout() {
               <Typography><i class="icofont-copy-invert"></i> Enquiry Details</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Link to='/admin/enquirylist'> <i class="icofont-arrow-right"></i> Pending Enquiry</Link>
+              <Link onClick={loader} to='/admin/enquirylist'> <i class="icofont-arrow-right"></i> Pending Enquiry</Link>
             </AccordionDetails>
             <AccordionDetails>
-              <Link to='/admin/enquiryAcceptlist'><i class="icofont-arrow-right"></i> Accepted Enquiry</Link>
+              <Link onClick={loader} to='/admin/enquiryAcceptlist'><i class="icofont-arrow-right"></i> Accepted Enquiry</Link>
             </AccordionDetails>
           </Accordion>
         </List>

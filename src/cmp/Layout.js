@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from "react-router-dom";
 import Logo from '../assets/images/logo.png'
+import { hideLoader, showLoader } from '../Services/common';
 
 
 
@@ -8,16 +9,17 @@ export default function Layout() {
 
 
     let navigate = useNavigate();
-    const [pathName, setPathName] = useState('')
-
 
     useEffect(() => {
-        setPathName("/" + window.location.href.split('/')[3])
+        // setPathName("/" + window.location.href.split('/')[3])
     }, [])
 
     function goto(path) {
-        setPathName(path)
+        showLoader()
         navigate(path);
+        setTimeout(() => {
+            hideLoader()
+        }, 1000);
     }
     return (
         <>
@@ -63,19 +65,19 @@ export default function Layout() {
                                 <div className="menu">
                                     <ul className="lab-ul active">
                                         <li className="">
-                                            <a className={`nav-link cursor-pointer ${pathName == '/' ? "active" : ""}`} onClick={() => { goto('/') }}><i className='fa fa-home'></i> Home</a>
+                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/') }}><i className='fa fa-home'></i> Home</a>
                                         </li>
                                         <li className="menu-item">
-                                            <a className={`nav-link cursor-pointer ${pathName == '/courses' ? "active" : ""}`} onClick={() => { goto('/courses') }}><i className='fa fa-mortar-board'></i> Courses</a>
+                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/courses') }}><i className='fa fa-mortar-board'></i> Courses</a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className={`nav-link cursor-pointer ${pathName == '/contactus' ? "active" : ""}`} onClick={() => { goto('/contactus') }}><i className='fa fa-phone'></i> Contact Us</a>
+                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/contactus') }}><i className='fa fa-phone'></i> Contact Us</a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className={`nav-link cursor-pointer ${pathName == '/enquiry' ? "active" : ""}`} onClick={() => { goto('/enquiry') }}><i className='fa fa-search'></i> Enquiry Now</a>
+                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/enquiry') }}><i className='fa fa-search'></i> Enquiry Now</a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className={`nav-link cursor-pointer ${pathName == '/enquirystatus' ? "active" : ""}`} onClick={() => { goto('/enquirystatus') }}><i className='fa fa-commenting'></i> Enquiry Status</a>
+                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/enquirystatus') }}><i className='fa fa-commenting'></i> Enquiry Status</a>
                                         </li>
                                     </ul>
 

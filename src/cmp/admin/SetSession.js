@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { addSession, allSession, deleteSession, editSession } from '../../Services/sessionServices'
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import {showLoader, hideLoader} from '../../Services/common'
 
 export default function SetSession() {
 
@@ -13,10 +14,11 @@ export default function SetSession() {
     const [startErr, setStartErr] = useState(false)
     const [endErr, setEndErr] = useState(false)
 
-
-
     useEffect(() => {
         allSessionFun()
+        setTimeout(() => {
+            hideLoader()
+        }, 1000);
     }, [])
 
     const allSessionFun = () => {
@@ -49,7 +51,9 @@ export default function SetSession() {
                 "start": start,
                 "end": end
             }
+            showLoader()
             addSession(data).then(result => {
+                hideLoader()
                 if (result.data.success) {
                     NotificationManager.success(result.data.message);
                     setStart("")
@@ -67,21 +71,29 @@ export default function SetSession() {
 
 
     const onEdit = (val) => {
+        showLoader()
         setStart(val.start)
         setEnd(val.end)
         setEditId(val.id)
         setEditBtn(true)
         setStartErr(false)
         setEndErr(false)
+        setTimeout(() => {
+            hideLoader()
+        }, 1000);
     }
 
     const onReset = () => {
+        showLoader()
         setStart("")
         setEnd("")
         setEditId("")
         setEditBtn(false)
         setStartErr(false)
         setEndErr(false)
+        setTimeout(() => {
+            hideLoader()
+        }, 1000);
     }
 
     const onEditBtn = () => {
@@ -107,8 +119,9 @@ export default function SetSession() {
                 "start": start,
                 "end": end
             }
-    
+            showLoader()
             editSession(data).then(result => {
+                hideLoader()
                 if (result.data.success) {
                     NotificationManager.success(result.data.message);
                     setStart("")
@@ -128,8 +141,9 @@ export default function SetSession() {
         var data = {
             "id": val
         }
-
+        showLoader()
         deleteSession(data).then(result => {
+            hideLoader()
             if (result.data.success) {
                 NotificationManager.success(result.data.message);
                 allSessionFun()

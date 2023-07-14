@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { allCourse } from '../../Services/courseServices'
 import { allUsers } from '../../Services/userServices'
 import { allEnquiry } from '../../Services/enquiryServices'
+import { hideLoader } from '../../Services/common'
+import { useNavigate } from 'react-router'
 
 
 
 export default function DashboardAdmin() {
+
+  var navigate = useNavigate()
 
   const [registrationList, setRegistrationList] = useState([])
   const [courseList, setCourseList] = useState([])
@@ -14,10 +18,20 @@ export default function DashboardAdmin() {
 
 
   useEffect(() => {
+    loginCheck()
+    setTimeout(() => {
+      hideLoader()
+    }, 1000);
     allCourseFun()
     allRegistrationFun()
     allEnquiryFun()
 }, [])
+
+const loginCheck=()=>{
+  if(!sessionStorage.getItem('admin')){
+    navigate("/login")
+  }
+}
 
 const allCourseFun = () => {
     var data = {
@@ -99,7 +113,7 @@ const allEnquiryFun=()=>{
                 {
                   enquiryList.length !=0?
                   enquiryList.map((item, i) => (
-                    i+1
+                    i+1 
                   ))
                   :0
                 }

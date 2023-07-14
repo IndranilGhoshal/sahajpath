@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import newsfoot1 from '../assets/images/03.png'
 import newsfoot2 from '../assets/images/04.png'
 import iconcont1 from '../assets/images/icon/01.png'
@@ -7,11 +7,18 @@ import iconcont3 from '../assets/images/icon/03.png'
 import iconcont4 from '../assets/images/icon/04.png'
 import Footers from './Footers'
 import { useNavigate } from 'react-router-dom'
+import { hideLoader } from '../Services/common'
 
 
 export default function ContactUs() {
 
   var navigate = useNavigate()
+
+  useEffect(()=>{
+    setTimeout(() => {
+      hideLoader()
+    }, 1000);
+  },[])
 
   const goto = (path) =>{
     navigate(path)

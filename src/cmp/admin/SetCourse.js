@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { addCourse, allCourse, deleteCourse, editCourse, uploadFile } from '../../Services/courseServices'
 // import banimg from '../assets/images/bg-img/2.jpg'
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { hideLoader, showLoader } from '../../Services/common';
 
 
 export default function SetCourse() {
@@ -33,6 +34,9 @@ export default function SetCourse() {
 
     useEffect(() => {
         allCourseFun()
+        setTimeout(() => {
+            hideLoader()
+        }, 1000);
     }, [])
 
     const allCourseFun = () => {
@@ -43,7 +47,6 @@ export default function SetCourse() {
             setCourseList(result.data.response)
         })
     }
-
 
     function showUpload() {
         const image = document.getElementById('file');
@@ -56,14 +59,16 @@ export default function SetCourse() {
         const file = image.files;
         console.log(file)
         if (file) {
-            // const reader = new FileReader();
-            // reader.readAsDataURL(file[0])
             const fileData = new FormData();
             fileData.append('file', file[0])
+            showLoader()
             uploadFile(fileData).then(result => {
+                hideLoader()
                 if (result.success) {
                     setCourseBanner(result.fileName)
                     NotificationManager.success("Banner uploaded successfully");
+                }else{
+                    NotificationManager.error("Something went wrong");
                 }
             })
         }
@@ -138,7 +143,9 @@ export default function SetCourse() {
                 "courseBanner": courseBanner
 
             }
+            showLoader()
             addCourse(data).then(result => {
+                hideLoader()
                 if (result.data.success) {
                     NotificationManager.success(result.data.message);
                     setCourse("")
@@ -162,6 +169,7 @@ export default function SetCourse() {
     }
 
     const onReset = () => {
+        showLoader()
         setCourse("")
         setCourseDuration("")
         setCourseFees("")
@@ -184,6 +192,9 @@ export default function SetCourse() {
         setCourseTypeNoErr(false)
         setCourseBannerErr(false)
         setEditBtn(false)
+        setTimeout(() => {
+            hideLoader()
+        }, 1000);
     }
 
     const [editBtn, setEditBtn] = useState(false)
@@ -191,6 +202,7 @@ export default function SetCourse() {
 
 
     const onEdit = (val) => {
+        showLoader()
         setCourse(val.course)
         setCourseDuration(val.courseDuration)
         setCourseFees(val.courseFees)
@@ -213,6 +225,9 @@ export default function SetCourse() {
         setCourseTypeFeesErr(false)
         setCourseTypeNoErr(false)
         setCourseBannerErr(false)
+        setTimeout(() => {
+            hideLoader()
+        }, 1000);
     }
 
     const onEditBtn = () => {
@@ -284,8 +299,9 @@ export default function SetCourse() {
                 "courseTypeNo": courseTypeNo,
                 "courseBanner": courseBanner
             }
-    
+            showLoader()
             editCourse(data).then(result => {
+                hideLoader()
                 if (result.data.success) {
                     NotificationManager.success(result.data.message);
                     setCourse("")
@@ -312,8 +328,9 @@ export default function SetCourse() {
         var data = {
             "id": val
         }
-
+        showLoader()
         deleteCourse(data).then(result => {
+            hideLoader()
             if (result.data.success) {
                 NotificationManager.success(result.data.message);
                 allCourseFun()

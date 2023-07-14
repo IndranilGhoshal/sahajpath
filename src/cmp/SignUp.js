@@ -9,6 +9,7 @@ import { allCourse, courseDetails } from '../Services/courseServices';
 import Footers from './Footers'
 import { registration } from '../Services/userServices'
 import { allSession } from '../Services/sessionServices';
+import { hideLoader, showLoader } from '../Services/common';
 
 
 
@@ -51,6 +52,7 @@ export default function SignUp() {
 
   function goto(path) {
     navigate(path);
+    showLoader()
   }
 
   const [courseList, setCourseList] = useState([])
@@ -59,6 +61,9 @@ export default function SignUp() {
   useEffect(() => {
     allCourseFun()
     allSessionFun()
+    setTimeout(() => {
+      hideLoader()
+    }, 1000);
   }, [])
 
   const allCourseFun = () => {
@@ -379,7 +384,7 @@ export default function SignUp() {
 
                   <div className='mt-4'>
                     <div className='text-center'><p> Are you already register?</p></div>
-                    <div className='text-center'><p>Please <span className='font-weight-500 cursor-pointer' onClick={() => { goto('/login') }}>Login</span></p></div>
+                    <div className='text-center'><p>Please <span style={{cursor:"pointer", fontWeight:"500"}} onClick={() => { goto('/login') }}>Login</span></p></div>
                   </div>
 
                 </div>

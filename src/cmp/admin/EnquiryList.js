@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { allEnquiry, deleteEnquiry } from '../../Services/enquiryServices'
 import { useNavigate } from 'react-router-dom'
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { hideLoader, showLoader } from '../../Services/common';
 
 export default function EnquiryList() {
 
@@ -11,7 +12,9 @@ export default function EnquiryList() {
 
   useEffect(() => {
     allEnquiryFun()
-  
+    setTimeout(() => {
+      hideLoader()
+  }, 1000);
   }, [])
   
 
@@ -25,7 +28,11 @@ export default function EnquiryList() {
   }
 
   const goto = (val) =>{
+    showLoader()
     navigate("/admin/enquirydetails/"+val)
+    setTimeout(() => {
+      hideLoader()
+    }, 1000);
   }
 
   const deleteEnquiryFun = (val) =>{
@@ -33,9 +40,9 @@ export default function EnquiryList() {
     var data = {
       "id":val
     }
-
+    showLoader()
     deleteEnquiry(data).then(result=>{
-
+      hideLoader()
       if(result.data.success){
         NotificationManager.success(result.data.message);
         allEnquiryFun()
@@ -61,6 +68,7 @@ export default function EnquiryList() {
                 <th scope="col">Sl. No.</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email Id</th>
+                <th scope="col">Contact No.</th>
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
               </tr>
@@ -72,7 +80,7 @@ export default function EnquiryList() {
                                 <>
                                    
                                         <tr>
-                                            <td colSpan='5' className='text-center'>No Data Found</td>
+                                            <td colSpan='6' className='text-center'>No Data Found</td>
                                         </tr>
                                     
                                 </>
@@ -85,6 +93,7 @@ export default function EnquiryList() {
                                                     <td scope="row">{i + 1}.</td>
                                                     <td>{item.name}</td>
                                                     <td>{item.email}</td>
+                                                    <td>{item.mobileNo}</td>
                                                     <td><span class="badge bg-warning text-dark">{item.status}</span></td>
 
                                                     <td>

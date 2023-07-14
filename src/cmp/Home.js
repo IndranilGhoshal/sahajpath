@@ -1,12 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import banrimg1 from '../assets/images/01.png'
 import about01 from '../assets/images/01_002.jpg'
 import about02 from '../assets/images/02_003.jpg'
 import about03 from '../assets/images/03_005.jpg'
 import about04 from '../assets/images/01_002.png'
-import course1 from '../assets/images/04_002.jpg'
-import course2 from '../assets/images/02_006.jpg'
-import course3 from '../assets/images/03_003.jpg'
 import feedback1 from '../assets/images/01_008.jpg'
 import feedback2 from '../assets/images/01_004.jpg'
 import feedback3 from '../assets/images/02_002.jpg'
@@ -15,9 +12,15 @@ import newsfoot2 from '../assets/images/04.png'
 import achiv1 from '../assets/images/01_003.png'
 import achiv2 from '../assets/images/02.png'
 import Footers from './Footers'
+import { hideLoader } from '../Services/common'
 
 
 export default function Home() {
+    useEffect(()=>{
+        setTimeout(() => {
+            hideLoader()
+        }, 1000);
+    },[])
     return (
         <>
             {/* <!-- banner section start here --> */}
@@ -115,7 +118,7 @@ export default function Home() {
 
 
             {/* <!-- course section start here --> */}
-            <div className="course-section padding-tb section-bg">
+            {/* <div className="course-section padding-tb section-bg">
                 <div className="container">
                     <div className="section-header text-center">
                         <span className="subtitle">Featured Courses</span>
@@ -196,7 +199,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             {/* <!-- course section ending here --> */}
 
 

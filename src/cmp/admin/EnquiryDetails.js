@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { addDescription, enquiryDetails } from '../../Services/enquiryServices'
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { hideLoader, showLoader } from '../../Services/common'
 
 
 export default function EnquiryDetails() {
@@ -15,6 +16,9 @@ export default function EnquiryDetails() {
 
     useEffect(() => {
         enquiryDetailsFun()
+        setTimeout(() => {
+            hideLoader()
+        }, 1000);
     }, [])
 
     const enquiryDetailsFun = () => {
@@ -26,33 +30,36 @@ export default function EnquiryDetails() {
         })
     }
 
-    const onApproved = () =>{
+    const onApproved = () => {
 
-        var err=0
+        var err = 0
 
-        if(adminDescription==''){
+        if (adminDescription == '') {
             NotificationManager.error("Enter description");
             err++
         }
 
-        if(err==0){
+        if (err == 0) {
             var data = {
-                "id":id,
-                "adminDescription":adminDescription
+                "id": id,
+                "adminDescription": adminDescription
             }
-    
-            addDescription(data).then(result=>{
-                if(result.data.success){
+            showLoader()
+            addDescription(data).then(result => {
+                hideLoader()
+                if (result.data.success) {
                     navigate("/admin/enquirylist")
+                } else {
+                    NotificationManager.error(result.data.message);
                 }
             })
         }
-        
+
     }
 
     return (
         <>
-        <div className='session-list-head'>Enquiry Details</div>
+            <div className='session-list-head'>Enquiry Details</div>
             <div className='regst_stus'>
                 <div className='row'>
                     <div className='col-sm-12'>
@@ -76,17 +83,33 @@ export default function EnquiryDetails() {
                             <li><label>Description:</label><div>{details.description}</div></li>
                             <li><label>Status:</label><div><span class="badge bg-warning text-dark">{details.status}</span></div></li>
                             <li><label>Admin Description:</label>
-                            <textarea className='form-control' value={adminDescription} onChange={(e)=>{setAdminDescription(e.target.value)}}>
-                            </textarea>
+
+                                {
+                                    details.status == "Pending"
+                                        ?
+                                        <textarea className='form-control' value={adminDescription} onChange={(e) => { setAdminDescription(e.target.value) }}>
+                                        </textarea>
+                                        :
+                                        <div>{details.admin_description}</div>
+
+                                }
+
                             </li>
                         </ul>
                     </div>
-                    </div>
+                </div>
 
-            
-                <div className='mx-auto d-grid gap-2 mt-4'>
-                        <button className='btn btn-primary btn-lg submits' onClick={onApproved}>Approved</button>
-                    </div>
+
+                         {
+                        details.status == "Pending"
+                        ?
+                        <div className='mx-auto d-grid gap-2 mt-4'>
+                            <button className='btn btn-primary btn-lg submits' onClick={onApproved}>Approved</button>
+                        </div>
+                        :null
+                            }
+
+
 
             </div>
             <NotificationContainer />

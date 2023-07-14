@@ -7,6 +7,9 @@ import newsfoot2 from '../assets/images/04.png'
 import { useNavigate } from 'react-router-dom'
 import Footers from './Footers';
 import { allCourse } from '../Services/courseServices';
+import { hideLoader, showLoader } from '../Services/common';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+
 
 export default function Enquiry() {
 
@@ -39,7 +42,7 @@ export default function Enquiry() {
         setCourse("")
         setInform("")
         setDescription("")
-
+        navigate("/")
     };
     const handleShow = () => setShow(true);
 
@@ -97,20 +100,17 @@ export default function Enquiry() {
 
     useEffect(() => {
         getCoursesData()
+        setTimeout(() => {
+            hideLoader()
+        }, 1000);
     }, [])
 
     const getCoursesData = () => {
-        var data = {
-
-        }
-
+        var data = {}
         allCourse(data).then(result => {
             setCourseData(result.data.response)
         })
     }
-
-
-
 
     const onSubmit = () => {
         var err = 0
@@ -207,36 +207,34 @@ export default function Enquiry() {
             setDescriptionErr(true)
             err++
         }
-
-        var data = {
-            "name": name,
-            "fatherName": fatherName,
-            "fatherOccupation": fatherOccupation,
-            "caste": caste,
-            "address": address,
-            "pinCode": pinCode,
-            "email": email,
-            "mobileNo": mobileNo,
-            "anotherMobileNo": anotherMobileNo,
-            "whatsappNo": whatsappNo,
-            "lastQualification": lastQualification,
-            "dateOfBirth": dateOfBirth,
-            "gender": gender,
-            "language": language,
-            "course": course,
-            "inform": inform,
-            "description": description,
-        }
-
         if (err == 0) {
-
-            console.log(data)
-
+            var data = {
+                "name": name,
+                "fatherName": fatherName,
+                "fatherOccupation": fatherOccupation,
+                "caste": caste,
+                "address": address,
+                "pinCode": pinCode,
+                "email": email,
+                "mobileNo": mobileNo,
+                "anotherMobileNo": anotherMobileNo,
+                "whatsappNo": whatsappNo,
+                "lastQualification": lastQualification,
+                "dateOfBirth": dateOfBirth,
+                "gender": gender,
+                "language": language,
+                "course": course,
+                "inform": inform,
+                "description": description,
+            }
+            showLoader()
             addEnquiry(data).then(result => {
-                console.log(result.data)
+                hideLoader()
                 if (result.data.success) {
                     setKey(result.data.response.key)
                     handleShow()
+                }else{
+                    NotificationManager.error(result.data.message);
                 }
             })
         }
@@ -586,6 +584,9 @@ export default function Enquiry() {
                     <Button variant="primary" onClick={handleClose}>Ok</Button>
                 </Modal.Footer>
             </Modal>
+
+            <NotificationContainer />
+
         </>
     )
 }

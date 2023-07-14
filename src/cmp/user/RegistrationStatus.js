@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getUserId } from '../../Services/common'
+import { getUserData, hideLoader } from '../../Services/common'
 import { userDetails } from '../../Services/userServices'
 import { allCourse } from '../../Services/courseServices'
 import { allSession } from '../../Services/sessionServices'
@@ -13,11 +13,14 @@ export default function RegistrationStatus() {
         registrationDetailsFun()
         allCourseFun()
         allSessionFun()
+        setTimeout(() => {
+            hideLoader()
+        }, 1000);
     }, [])
 
     const registrationDetailsFun = () => {
         var data = {
-            "id": getUserId().response.id
+            "id": getUserData().response.id
         }
         userDetails(data).then(result => {
             setDetails(result.data.response)

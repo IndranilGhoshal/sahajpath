@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from '../assets/images/logo.png'
 import newsfoot1 from '../assets/images/03.png'
 import newsfoot2 from '../assets/images/04.png'
@@ -9,14 +9,32 @@ import { userLogin } from '../Services/userServices';
 import { adminLogin } from '../Services/adminServices';
 import Footers from './Footers'
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { getAdminData, getUserData, hideLoader, showLoader } from '../Services/common'
 
 
 
 export default function Login() {
     let navigate = useNavigate();
 
+    useEffect(() => {
+
+        if (sessionStorage.getItem('user')) {
+            navigate("/user/dashboard")
+        }
+
+        if (sessionStorage.getItem('admin')) {
+            navigate("/admin/dashboard")
+        }
+
+
+        setTimeout(() => {
+            hideLoader()
+        }, 1000);
+    }, [])
+
     function goto(path) {
         navigate(path);
+        showLoader()
     }
 
     const [email, setEmail] = useState('')
@@ -41,13 +59,13 @@ export default function Login() {
             err++
         }
 
-        if(email.trim()){
+        if (email.trim()) {
             if (!email.trim().match(mailformat)) {
                 setValidEmailErr(true)
                 err++
             }
         }
-        
+
 
         if (password.trim() == "") {
             setPasswordErr(true)
@@ -60,11 +78,13 @@ export default function Login() {
                 "email": email.trim(),
                 "password": password.trim()
             }
+            showLoader()
             userLogin(data).then(result => {
+                hideLoader()
                 if (result.data.success) {
                     sessionStorage.setItem('user', JSON.stringify(result.data))
                     navigate("/users/dashboard")
-                }else{
+                } else {
                     NotificationManager.error(result.data.message);
                 }
             })
@@ -88,7 +108,7 @@ export default function Login() {
             err++
         }
 
-        if(email.trim()){
+        if (email.trim()) {
             if (!email.trim().match(mailformat)) {
                 setValidEmailErr(true)
                 err++
@@ -105,12 +125,14 @@ export default function Login() {
                 "email": email.trim(),
                 "password": password.trim()
             }
+            showLoader()
             adminLogin(data).then(result => {
+                hideLoader()
                 // console.log(result)
                 if (result.data.success) {
-                    sessionStorage.setItem('admin', JSON.stringify(data))
+                    sessionStorage.setItem('admin', JSON.stringify(result.data))
                     navigate("/admin/dashboard")
-                }else{
+                } else {
                     NotificationManager.error(result.data.message);
                 }
             })
@@ -226,7 +248,7 @@ export default function Login() {
                                             </div>
                                             <div className='mt-4'>
                                                 <div className='text-center'><p>Are you new user?</p></div>
-                                                <div className='text-center'><p>Please <span style={{cursor: 'pointer', fontWeight:'500'}} onClick={() => { goto('/signup') }}>Sign Up</span></p></div>
+                                                <div className='text-center'><p>Please <span style={{ cursor: 'pointer', fontWeight: '500' }} onClick={() => { goto('/signup') }}>Sign Up</span></p></div>
                                             </div>
 
 

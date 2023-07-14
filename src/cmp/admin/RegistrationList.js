@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { allUsers } from '../../Services/userServices'
 
 import { useNavigate } from 'react-router-dom'
+import { hideLoader, showLoader } from '../../Services/common'
 
 
 
@@ -13,6 +14,9 @@ export default function RegistrationList() {
 
   useEffect(() => {
     allRegistrationFun()
+    setTimeout(() => {
+      hideLoader()
+    }, 1000);
   }, [])
 
   const allRegistrationFun = () => {
@@ -24,7 +28,11 @@ export default function RegistrationList() {
   }
 
   const goto = (val) =>{
+    showLoader()
     navigate("/admin/registrationdetails/"+val)
+    setTimeout(() => {
+      hideLoader()
+    }, 1000);
   }
 
   return (

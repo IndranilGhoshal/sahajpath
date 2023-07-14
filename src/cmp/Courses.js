@@ -11,6 +11,7 @@ import Footers from './Footers'
 import { useNavigate } from 'react-router-dom'
 import { allCourse } from '../Services/courseServices'
 import { IMAGE_URL } from '../urlConfig/Url'
+import { hideLoader } from '../Services/common'
 
 export default function Courses() {
 
@@ -22,6 +23,9 @@ export default function Courses() {
 
   useEffect(() => {
     allCoursefun()
+    setTimeout(() => {
+      hideLoader()
+    }, 1000);
   }, [])
 
   const [courseData, setCourseData] = useState([])
