@@ -4811,8 +4811,13 @@ button {
 
 @media (max-width: 575px) {
   .header-wrapper .logo {
-    width: 160px;
+    width: 100px;
   }
+  .header-wrapper {
+    justify-content: space-between;
+    display: flex;
+    padding-bottom: 0;
+}
 }
 
 @media (max-width: 1199px) and (min-width: 992px) {
@@ -4969,6 +4974,21 @@ button {
 }
 
 @media (max-width: 991px) {
+  .header-wrapper .menu-area.active ul.lab-ul {
+    display: block !important;
+    transform: scale(1);
+}
+.header-wrapper .menu-area .login, .header-wrapper .menu-area .signup {
+  display: block;
+  padding: 5px;
+}
+.header-bar{margin-left: 10px; margin-right: 10px;}
+.menu-area.active .header-bar.d-lg-none {
+  display: none;
+}
+.menu-area.active .ellepsis-bar.d-lg-none{
+  display: block;
+}
   .menu>ul {
     width: 100%;
     position: absolute;

@@ -21,6 +21,19 @@ export default function Layout() {
             hideLoader()
         }, 1000);
     }
+
+
+    const [menubar, setMenuBar] = useState(false)
+
+    const menufun =()=>{
+        if(!menubar){
+            setMenuBar(true)
+        }else{
+           setMenuBar(false) 
+        }
+    }
+
+
     return (
         <>
 
@@ -61,23 +74,23 @@ export default function Layout() {
                             <div className="logo">
                                 <a href=""><img className='nav-logo' src={Logo} /></a>
                             </div>
-                            <div className="menu-area">
+                            <div className={`menu-area `}>
                                 <div className="menu">
-                                    <ul className="lab-ul active">
+                                    <ul className={`lab-ul ${menubar?"active":""}`}>
                                         <li className="">
-                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/') }}><i className='fa fa-home'></i> Home</a>
+                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/'); menufun() }}><i className='fa fa-home'></i> Home</a>
                                         </li>
                                         <li className="menu-item">
-                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/courses') }}><i className='fa fa-mortar-board'></i> Courses</a>
+                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/courses'); menufun() }}><i className='fa fa-mortar-board'></i> Courses</a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/contactus') }}><i className='fa fa-phone'></i> Contact Us</a>
+                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/contactus'); menufun() }}><i className='fa fa-phone'></i> Contact Us</a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/enquiry') }}><i className='fa fa-search'></i> Enquiry Now</a>
+                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/enquiry'); menufun() }}><i className='fa fa-search'></i> Enquiry Now</a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/enquirystatus') }}><i className='fa fa-commenting'></i> Enquiry Status</a>
+                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/enquirystatus'); menufun() }}><i className='fa fa-commenting'></i> Enquiry Status</a>
                                         </li>
                                     </ul>
 
@@ -85,18 +98,16 @@ export default function Layout() {
                                 </div>
 
 
-                                <a className='login' onClick={() => { goto('/login') }}><i className='fa fa-sign-in'></i> Login</a>
-                                <a className='signup' onClick={() => { goto('/signup') }}><i className="fa fa-user-plus"> </i> Registration</a>
+                                <a className='login' onClick={() => { goto('/login'); setMenuBar(false)  } }><i className='fa fa-sign-in'></i> Login</a>
+                                <a className='signup' onClick={() => { goto('/signup'); setMenuBar(false)  }}><i className="fa fa-user-plus"> </i> Registration</a>
 
                                 {/* <!-- toggle icons --> */}
-                                <div className="header-bar d-lg-none active">
+                                <div className={`header-bar d-lg-none ${menubar?"active":""}`} onClick={()=>{menufun()}}>
                                     <span></span>
                                     <span></span>
                                     <span></span>
                                 </div>
-                                <div className="ellepsis-bar d-lg-none">
-                                    <i className="icofont-info-square"></i>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
