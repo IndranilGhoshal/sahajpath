@@ -92,6 +92,9 @@ export default function Layout() {
                                         <li className="nav-item">
                                             <a className={`nav-link cursor-pointer`} onClick={() => { goto('/enquirystatus'); menufun() }}><i className='fa fa-commenting'></i> Enquiry Status</a>
                                         </li>
+                                        <li className="nav-item">
+                                            <a className={`nav-link cursor-pointer`} onClick={() => { goto('/studynotes'); menufun() }}><i className='fa fa-book'></i> Study Notes</a>
+                                        </li>
                                     </ul>
 
 

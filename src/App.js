@@ -32,6 +32,8 @@ import EnquiryAccept from "./cmp/admin/EnquiryAccept";
 import RegistrationStatus from "./cmp/user/RegistrationStatus";
 import RegistrationList from "./cmp/admin/RegistrationList";
 import RegistrationDetails from "./cmp/admin/RegistrationDetails";
+import StudyNotes from "./cmp/StudyNotes";
+import StudyNotesAdmin from "./cmp/admin/StudyNotesAdmin";
 
 
 function App() {
@@ -55,6 +57,7 @@ function App() {
           <Route path="courses" element={<Courses />} />
           <Route path="enquiry" element={<Enquiry />} />
           <Route path="enquirystatus" element={<EnquiryStatus />} />
+          <Route path="studynotes" element={<StudyNotes />} />
 
           <Route path="*" element={<NoPage />} />
         </Route>
@@ -87,6 +90,8 @@ function App() {
           <Route path="enquiryAcceptlist" element={<EnquiryAccept />} />
           <Route path="enquirydetails/:id" element={<EnquiryDetails />} />
           <Route path="registrationdetails/:id" element={<RegistrationDetails />} />
+          <Route path="studynotes" element={<StudyNotesAdmin />} />
+
           
 
         </Route>

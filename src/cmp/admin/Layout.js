@@ -174,6 +174,11 @@ export default function Layout() {
               <Link onClick={loader} to='/admin/enquiryAcceptlist'><i class="icofont-arrow-right"></i> Accepted Enquiry</Link>
             </AccordionDetails>
           </Accordion>
+          <Accordion>
+            <AccordionSummary>
+              <Link onClick={loader} to='/admin/studynotes'><i class="icofont-dashboard-web"></i> Study Notes</Link>
+            </AccordionSummary>
+          </Accordion>
         </List>
       </Drawer>
       <Main open={open}>

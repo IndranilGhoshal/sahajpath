@@ -72,9 +72,7 @@ const allEnquiryFun=()=>{
               <h6>
                 {
                   courseList.length !=0?
-                  courseList.map((item, i) => (
-                    i+1
-                  ))
+                  courseList.length
                   :0
                 }
               </h6>
@@ -92,9 +90,7 @@ const allEnquiryFun=()=>{
               <h6>
                 {
                   registrationList.length !=0?
-                  registrationList.map((item, i) => (
-                    i+1
-                  ))
+                  registrationList.length
                   :0
                 }
               </h6>
@@ -112,9 +108,7 @@ const allEnquiryFun=()=>{
               <h6>
                 {
                   enquiryList.length !=0?
-                  enquiryList.map((item, i) => (
-                    i+1 
-                  ))
+                  enquiryList.length
                   :0
                 }
               </h6>

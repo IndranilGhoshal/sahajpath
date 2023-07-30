@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { addCourse, allCourse, deleteCourse, editCourse, uploadFile } from '../../Services/courseServices'
-// import banimg from '../assets/images/bg-img/2.jpg'
+import tick from '../../assets/images/tick.jpeg'
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { hideLoader, showLoader } from '../../Services/common';
 
@@ -452,6 +452,14 @@ export default function SetCourse() {
                             <div className='mt-2'>
                                 <input type="file" id="file" onChange={uploadImg} style={{ display: 'none' }} accept="image/jpg,image/jpeg" />
                                 <button class="btn btn-primary" onClick={showUpload}><i class="icofont-swoosh-up"></i> Upload</button>
+                                {
+                                   courseBanner?
+                                   <>
+                                   <span className='mx-2'>Upload successfull</span>
+                                   <img src={tick} width={28}/>
+                                   </>
+                                   :null
+                                }
                             </div>
                             {
                                 courseBannerErr ? <span className='color-red font-size-14'>Enter course banner</span> : null
@@ -477,7 +485,7 @@ export default function SetCourse() {
 
                     </div>
 
-                    <div className='row mt-2'>
+                    <div className='row mt-4'>
                         <div className='col-sm-12 d-flex justify-content-center'>
                         {
                                 editBtn ?
@@ -515,6 +523,7 @@ export default function SetCourse() {
                             <tr>
                                 <th scope="col">Sl. No.</th>
                                 <th scope="col">Course Name</th>
+                                <th scope="col">Approved by</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -536,6 +545,7 @@ export default function SetCourse() {
                                                 <tr>
                                                     <td scope="row">{i + 1}.</td>
                                                     <td>{item.course}</td>
+                                                    <td>{item.courseApprovedBy}</td>
                                                     <td>
                                                         <button type="button" className="btn btn-primary btn-sm" onClick={() => { onEdit(item) }}><i class="icofont-ui-edit"></i> Edit</button>
 
